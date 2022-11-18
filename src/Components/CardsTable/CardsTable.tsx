@@ -1,8 +1,8 @@
 import React from "react";
-
+import styles from "./CardsTable.module.scss";
 type TableProps = {
   data: RowData[];
-  columns: Column[];
+  columns: Column[] | {};
 };
 
 type RowData = {
@@ -15,23 +15,25 @@ type RowData = {
 };
 
 type Column = {
-  accessor: string;
+  accessor: keyof RowData;
   label: string;
 };
 
 const CardsTable = ({ data, columns }: TableProps) => {
   return (
-    <table>
-      <thead>
+    <table className={styles["my-cards-table"]}>
+      <thead className={styles.header}>
         <tr>
           {columns.map((column) => (
-            <th key={column.accessor}>{column.label}</th>
+            <th key={column.accessor} className={styles.headerCell}>
+              {column.label}
+            </th>
           ))}
         </tr>
       </thead>
       <tbody>
         {data.map((row) => (
-          <tr key={row.id}>
+          <tr key={row.id} className={styles.row}>
             {columns.map((column) => (
               <td key={column.accessor}>{row[column.accessor]}</td>
             ))}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
-import CustomButton from "./Components/Button/Button";
+import CustomButton from "./Components/CustomButton/CustomButton";
 import CardValidator from "./Components/CardValidator/CardValidator";
 import CardsTable from "./Components/CardsTable/CardsTable";
 
@@ -49,19 +49,11 @@ function App() {
       <section>
         <CardValidator />
         <div className="App">
-          <CustomButton
-            label="Save Card"
-            onClick={() => setCount(count + 1)}
-            className="root"
-          >
-            {console.log("Button clicked")}
+          <CustomButton onClick={() => setCount(count + 1)} className="root">
+            Save Card
           </CustomButton>
-          <CustomButton
-            label="Manage Blacklisted Countries"
-            onClick={() => setCount(count + 1)}
-            className="root"
-          >
-            {console.log("Button clicked")}
+          <CustomButton onClick={() => setCount(count + 1)} className="root">
+            Manage Blacklisted Countries
           </CustomButton>
         </div>
       </section>
