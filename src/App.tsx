@@ -4,6 +4,7 @@ import "./App.css";
 import CustomButton from "./Components/CustomButton/CustomButton";
 import CardValidator from "./Components/CardValidator/CardValidator";
 import CardsTable, { Column } from "./Components/CardsTable/CardsTable";
+import Modal from "./Components/Modal/Modal";
 
 // Dummy data for CardsTable
 const data = [
@@ -52,9 +53,7 @@ function App() {
           <CustomButton onClick={() => setCount(count + 1)} className="root">
             Save Card
           </CustomButton>
-          <CustomButton onClick={() => setCount(count + 1)} className="root">
-            Manage Blacklisted Countries
-          </CustomButton>
+          <Modal />
         </div>
       </section>
       <section>
