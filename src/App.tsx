@@ -3,7 +3,7 @@ import reactLogo from "./assets/react.svg";
 import "./App.css";
 import CustomButton from "./Components/CustomButton/CustomButton";
 import CardValidator from "./Components/CardValidator/CardValidator";
-import CardsTable from "./Components/CardsTable/CardsTable";
+import CardsTable, { Column } from "./Components/CardsTable/CardsTable";
 
 // Dummy data for CardsTable
 const data = [
@@ -33,7 +33,7 @@ const data = [
   },
 ];
 
-const columns = [
+export const columns: Column[] = [
   { accessor: "name", label: "Name" },
   { accessor: "country", label: "Country" },
   { accessor: "cardNumber", label: "Card Number" },

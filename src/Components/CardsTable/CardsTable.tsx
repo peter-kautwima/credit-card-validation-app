@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./CardsTable.module.scss";
 type TableProps = {
   data: RowData[];
-  columns: Column[] | {};
+  columns: Column[];
 };
 
 type RowData = {
