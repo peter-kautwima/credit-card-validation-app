@@ -38,7 +38,7 @@ export const columns: Column[] = [
   { accessor: "name", label: "Name" },
   { accessor: "country", label: "Country" },
   { accessor: "cardNumber", label: "Card Number" },
-  { accessor: "expirationDate", label: "Expiration Date" },
+  { accessor: "expirationDate", label: "Exp Date" },
   { accessor: "cvv", label: "CVV" },
 ];
 

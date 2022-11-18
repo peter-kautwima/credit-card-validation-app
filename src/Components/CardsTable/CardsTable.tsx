@@ -21,26 +21,23 @@ type Column = {
 
 const CardsTable = ({ data, columns }: TableProps) => {
   return (
-    <table className={styles["my-cards-table"]}>
-      <thead className={styles.header}>
-        <tr>
-          {columns.map((column) => (
-            <th key={column.accessor} className={styles.headerCell}>
-              {column.label}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {data.map((row) => (
-          <tr key={row.id} className={styles.row}>
-            {columns.map((column) => (
-              <td key={column.accessor}>{row[column.accessor]}</td>
-            ))}
-          </tr>
+    <div className={styles["my-cards-table"]}>
+      <div className={styles.header}>
+        {columns.map((column) => (
+          <div key={column.accessor} className={styles.headerCell}>
+            {column.label}
+          </div>
         ))}
-      </tbody>
-    </table>
+      </div>
+      {data.map((row) => (
+        <div key={row.id} className={styles.row}>
+          {Object.keys(row).map((key) => {
+            const value = row[key as keyof RowData];
+            return <div>{value}</div>;
+          })}
+        </div>
+      ))}
+    </div>
   );
 };
 
