@@ -30,7 +30,7 @@ function App() {
       name: `John Doe ${state.cards.length + 1}`,
       country: "United States",
       cardNumber: "1234 5678 9012 3456",
-      expiry: "01/2025",
+      expirationDate: "01/2025",
       cvv: "123",
     };
     const newCards = [...state.cards, newCard];

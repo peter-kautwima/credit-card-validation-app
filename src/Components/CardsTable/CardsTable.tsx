@@ -8,7 +8,7 @@ type TableProps = {
 
 type RowData = Card;
 
-type Column = {
+export type Column = {
   accessor: keyof RowData;
   label: string;
 };
