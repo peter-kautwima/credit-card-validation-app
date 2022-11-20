@@ -1,20 +1,14 @@
 import React from "react";
 import styles from "./CardsTable.module.scss";
+import { Card } from "../../types";
 type TableProps = {
   data: RowData[];
   columns: Column[];
 };
 
-type RowData = {
-  id: string;
-  name: string;
-  country: string;
-  cardNumber: string;
-  expirationDate: string;
-  cvv: string;
-};
+type RowData = Card;
 
-type Column = {
+export type Column = {
   accessor: keyof RowData;
   label: string;
 };
