@@ -29,4 +29,22 @@ describe("validation", () => {
       "Must be a number between 1 and 12"
     );
   });
+
+  it("validate CVC", () => {
+    assert.equal(validationNumbersOnly("8698"), true);
+    assert.equal(validationNumbersOnly(8979), true);
+    assert.equal(validationNumbersOnly("kjh876j87"), "Must be a number");
+  });
+
+  it("validate Card Number", () => {
+    assert.equal(validateLength("4589", 16), "Must be at least 16 characters");
+    assert.equal(validateLength("93", 16), "Must be at least 16 characters");
+    assert.equal(validateLength("943", 16), "Must be at least 16 characters");
+    assert.equal(validateLength("9431234567891234", 16), true);
+  });
+
+  it("validate Name", () => {
+    assert.equal(validateLength("", 1), "Must be at least 1 characters");
+    assert.equal(validateLength("943", 1), true);
+  });
 });

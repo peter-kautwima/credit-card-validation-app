@@ -30,3 +30,24 @@ export const validationNumberRange = (
   }
   return true;
 };
+
+export const validateCVC = (value: string) => {
+  if (isNaN(Number(value))) {
+    return "Must be a number";
+  }
+  return true;
+};
+
+export const validateCardNumber = (value: string) => {
+  if (isNaN(Number(value)) || value.length !== 16) {
+    return "Must be a number of 16 digits";
+  }
+  return true;
+};
+
+export const validateName = (value: string) => {
+  if (value.length < 1) {
+    return "Name should be at least 1 character";
+  }
+  return true;
+};
