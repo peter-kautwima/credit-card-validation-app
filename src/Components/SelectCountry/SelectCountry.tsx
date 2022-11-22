@@ -1,6 +1,15 @@
 import React from "react";
 
-type Props = {};
+// interface Props extends React.HTMLAttributes<HTMLOptionElement> {
+//   children: React.ReactNode;
+//   value: string;
+//   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+// }
+
+// interface props for SelectCountry
+interface Props {
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+}
 
 const SelectCountry = (props: Props) => {
   return (
