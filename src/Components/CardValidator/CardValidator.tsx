@@ -5,6 +5,7 @@ import TextField from "../TextField/TextField";
 type Props = {};
 
 type Values = {
+  name: string | null;
   cardNumber: number | null;
   expirationDateMM: number | null;
   expirationDateYY: number | null;
@@ -13,6 +14,7 @@ type Values = {
 
 const CardValidator = (props: Props) => {
   const [values, setValues] = useState<Values>({
+    name: null,
     cardNumber: null,
     expirationDateMM: null,
     expirationDateYY: null,
