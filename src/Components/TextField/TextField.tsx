@@ -4,7 +4,7 @@ import styles from "./TextField.module.scss";
 type Props = {
   name: string;
   label: string;
-  value: string;
+  value: string | number | null;
   placeholder?: string;
   error?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;

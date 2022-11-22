@@ -1,27 +1,75 @@
-import React from "react";
+import React, { useState } from "react";
 import SelectCountry from "../SelectCountry/SelectCountry";
+import TextField from "../TextField/TextField";
 
 type Props = {};
 
+type Values = {
+  cardNumber: number | null;
+  expirationDateMM: number | null;
+  expirationDateYY: number | null;
+  cvv: number | null;
+};
+
 const CardValidator = (props: Props) => {
+  const [values, setValues] = useState<Values>({
+    cardNumber: null,
+    expirationDateMM: null,
+    expirationDateYY: null,
+    cvv: null,
+  });
   return (
     <form>
-      <label htmlFor="card-number">Card number</label>
-      <input type="text" id="card-number" required size={16} min="16" />
-      <label htmlFor="month">Expiration date: MM</label>
-      <input max="12" min="1" name="month" step="1" type="number" required />
-      <label htmlFor="year">YY</label>
-      <input max="99" min="23" name="year" step="1" type="number" required />
-      <label htmlFor="cvv">CVV</label>
-      <input type="password" id="cvv" required min="3" size={3} />
+      <TextField
+        name="name"
+        label="Name"
+        value={values.name}
+        placeholder="John Doe"
+        onChange={(e) => setValues({ ...values, name: e.target.value })}
+        error="Name is required"
+      />
+      <TextField
+        name="card-number"
+        label="Card Number"
+        value={values.cardNumber}
+        placeholder="XXXX XXXX XXXX XXXX"
+        onChange={(e) => setValues({ ...values, cardNumber: e.target.value })}
+        error="Card Number is required"
+      />
+      <TextField
+        name="expiration-date-mm"
+        label="Expiration date: MM"
+        value={values.expirationDateMM}
+        placeholder="MM"
+        onChange={(e) =>
+          setValues({ ...values, expirationDateMM: e.target.value })
+        }
+        error="Date is required"
+      />
+      <TextField
+        name="expiration-date-yy"
+        label="Expiration date: YY"
+        value={values.expirationDateYY}
+        placeholder="MM"
+        onChange={(e) =>
+          setValues({ ...values, expirationDateYY: e.target.value })
+        }
+        error="Date is required"
+      />
+      <TextField
+        name="cvv"
+        label="CVV"
+        value={values.cvv}
+        placeholder="cvv"
+        onChange={(e) => setValues({ ...values, cvv: e.target.value })}
+        error="CVV is required"
+      />
       <br />
       <SelectCountry
         onChange={function (e: React.ChangeEvent<HTMLSelectElement>): void {
           throw new Error("Function not implemented.");
         }}
       />
-      <label htmlFor="name">Name</label>
-      <input type="text" id="name" />
     </form>
   );
 };
