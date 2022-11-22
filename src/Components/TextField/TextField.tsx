@@ -18,8 +18,12 @@ const TextField = ({
   error,
   onChange,
 }: Props) => {
+  const classes = [
+    styles["text-field"],
+    error ? styles["text-field--error"] : "",
+  ].join(" ");
   return (
-    <div className={styles["text-field"]}>
+    <div className={classes}>
       <label htmlFor={name}>{label}</label>
       <input
         type="text"
@@ -28,6 +32,7 @@ const TextField = ({
         placeholder={placeholder}
         onChange={onChange}
       />
+      {error && <span className={styles.error}>{error}</span>}
     </div>
   );
 };

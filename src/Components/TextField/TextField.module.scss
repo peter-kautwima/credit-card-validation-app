@@ -5,3 +5,13 @@
   border-radius: 4px;
   box-sizing: border-box;
 }
+
+.text-field--error {
+  input {
+    border-color: red;
+  }
+}
+
+.error {
+  color: red;
+}
