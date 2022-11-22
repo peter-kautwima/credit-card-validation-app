@@ -8,6 +8,8 @@ type Props = {
   placeholder?: string;
   error?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
 };
 
 const TextField = ({
@@ -17,6 +19,8 @@ const TextField = ({
   placeholder,
   error,
   onChange,
+  onFocus,
+  onBlur,
 }: Props) => {
   const classes = [
     styles["text-field"],
@@ -31,6 +35,8 @@ const TextField = ({
         value={value}
         placeholder={placeholder}
         onChange={onChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
       {error && <span className={styles.error}>{error}</span>}
     </div>

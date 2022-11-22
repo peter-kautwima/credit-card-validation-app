@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SelectCountry from "../SelectCountry/SelectCountry";
 import TextField from "../TextField/TextField";
 
@@ -20,6 +20,59 @@ const CardValidator = (props: Props) => {
     expirationDateYY: null,
     cvv: null,
   });
+  const [errors, setErrors] = useState<Errors>({
+    name: "Name is required",
+    cardNumber: "Card number is required",
+    expirationDateMM: "Expiration date is required",
+    expirationDateYY: "Expiration date is required",
+    cvv: "CVV is required",
+  });
+
+  const [touched, setTouched] = useState<Touched>({
+    name: false,
+  });
+
+  const handleValidaton = () => {
+    const newErrors = { ...errors };
+
+    /** @todo abstract into validation util function.`validateRequired` */
+    if (!values.name && touched.name) {
+      newErrors.name = "Name is required";
+    } else {
+      newErrors.name = "";
+    }
+
+    if (!values.cardNumber && touched.name) {
+      newErrors.cardNumber = "Card number is required";
+    } else {
+      newErrors.cardNumber = "";
+    }
+
+    if (!values.expirationDateMM && touched.name) {
+      newErrors.expirationDateMM = "Expiration date is required";
+    } else {
+      newErrors.expirationDateMM = "";
+    }
+
+    if (!values.expirationDateYY && touched.name) {
+      newErrors.expirationDateYY = "Expiration date is required";
+    } else {
+      newErrors.expirationDateYY = "";
+    }
+
+    if (!values.cvv && touched.name) {
+      newErrors.cvv = "CVV is required";
+    } else {
+      newErrors.cvv = "";
+    }
+
+    setErrors(newErrors);
+  };
+
+  // Listen for changes in the values state and validate the inputs
+  useEffect(() => {
+    handleValidaton();
+  }, [values, touched]);
   return (
     <form>
       <TextField
@@ -28,7 +81,8 @@ const CardValidator = (props: Props) => {
         value={values.name}
         placeholder="John Doe"
         onChange={(e) => setValues({ ...values, name: e.target.value })}
-        error="Name is required"
+        onBlur={() => setTouched({ ...touched, name: true })}
+        error={errors.name}
       />
       <TextField
         name="card-number"
@@ -36,7 +90,8 @@ const CardValidator = (props: Props) => {
         value={values.cardNumber}
         placeholder="XXXX XXXX XXXX XXXX"
         onChange={(e) => setValues({ ...values, cardNumber: e.target.value })}
-        error="Card Number is required"
+        onBlur={() => setTouched({ ...touched, cardNumber: true })}
+        error={errors.cardNumber}
       />
       <TextField
         name="expiration-date-mm"
@@ -46,7 +101,8 @@ const CardValidator = (props: Props) => {
         onChange={(e) =>
           setValues({ ...values, expirationDateMM: e.target.value })
         }
-        error="Date is required"
+        onBlur={() => setTouched({ ...touched, expirationDateMM: true })}
+        error={errors.expirationDateMM}
       />
       <TextField
         name="expiration-date-yy"
@@ -56,7 +112,8 @@ const CardValidator = (props: Props) => {
         onChange={(e) =>
           setValues({ ...values, expirationDateYY: e.target.value })
         }
-        error="Date is required"
+        onBlur={() => setTouched({ ...touched, expirationDateYY: true })}
+        error={errors.expirationDateYY}
       />
       <TextField
         name="cvv"
@@ -64,7 +121,8 @@ const CardValidator = (props: Props) => {
         value={values.cvv}
         placeholder="cvv"
         onChange={(e) => setValues({ ...values, cvv: e.target.value })}
-        error="CVV is required"
+        onBlur={() => setTouched({ ...touched, cvv: true })}
+        error={errors.cvv}
       />
       <br />
       <SelectCountry
