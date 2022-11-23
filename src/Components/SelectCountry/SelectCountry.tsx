@@ -8,7 +8,9 @@ interface Props {
 const SelectCountry = ({ label, ...props }: Props) => {
   return (
     <div className={styles.select}>
-      <label htmlFor="country">{label}</label>
+      <label htmlFor="country" className={styles.label}>
+        {label}
+      </label>
       <select id="country" name="country" required {...props}>
         <option>select country</option>
         {countries.map((country) => (

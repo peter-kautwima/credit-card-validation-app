@@ -14,7 +14,9 @@ const TextField = ({ name, label, error, ...props }: Props) => {
   ].join(" ");
   return (
     <div className={classes}>
-      <label htmlFor={name}>{label}</label>
+      <label className={styles.label} htmlFor={name}>
+        {label}
+      </label>
       <input id={name} name={name} {...props} />
       {error && <span className={styles.error}>{error}</span>}
     </div>

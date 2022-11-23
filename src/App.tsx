@@ -1,11 +1,10 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
 import "./App.css";
 import CustomButton from "./Components/CustomButton/CustomButton";
-import CardValidator from "./Components/CardValidator/CardValidator";
 import CardsTable, { Column } from "./Components/CardsTable/CardsTable";
 import Modal from "./Components/Modal/Modal";
 import { Card } from "./types";
+import CreditCardForm from "./Components/CreditCardForm/CreditCardForm";
 
 type AppState = {
   cards: Card[];
@@ -42,7 +41,7 @@ function App() {
   return (
     <section>
       <section>
-        <CardValidator />
+        <CreditCardForm />
         <div className="App">
           <CustomButton onClick={handleCardSubmit} className="root">
             Save Card

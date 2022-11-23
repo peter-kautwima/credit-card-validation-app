@@ -20,7 +20,7 @@ type Touched = {
   [Property in keyof Values]?: boolean;
 };
 
-const CardValidator = (props: Props) => {
+const CreditCardForm = (props: Props) => {
   const [values, setValues] = useState<Values>({
     name: "",
     cardNumber: "",
@@ -138,4 +138,4 @@ const CardValidator = (props: Props) => {
   );
 };
 
-export default CardValidator;
+export default CreditCardForm;
