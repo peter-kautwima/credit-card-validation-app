@@ -83,11 +83,6 @@ const CreditCardForm = ({ onSubmit }: Props) => {
     setErrors(newErrors);
   };
 
-  // const existingCards = sessionStorage.getItem("cards");
-  // const [state, setState] = useState<AppState>({
-  //   cards: existingCards !== null ? JSON.parse(existingCards) : [],
-  // });
-
   // Listen for changes in the values state and validate the inputs
   useEffect(() => {
     handleValidaton();
@@ -102,6 +97,8 @@ const CreditCardForm = ({ onSubmit }: Props) => {
         onChange={(e) => setValues({ ...values, name: e.target.value })}
         onBlur={() => setTouched({ ...touched, name: true })}
         error={errors.name}
+        type="string"
+        required
       />
       <TextField
         name="card-number"
@@ -111,6 +108,8 @@ const CreditCardForm = ({ onSubmit }: Props) => {
         onChange={(e) => setValues({ ...values, cardNumber: e.target.value })}
         onBlur={() => setTouched({ ...touched, cardNumber: true })}
         error={errors.cardNumber}
+        type="number"
+        required
       />
       <TextField
         name="expiration-date-mm"
@@ -122,6 +121,8 @@ const CreditCardForm = ({ onSubmit }: Props) => {
         }
         onBlur={() => setTouched({ ...touched, expirationDateMM: true })}
         error={errors.expirationDateMM}
+        type="number"
+        required
       />
       <TextField
         name="expiration-date-yy"
@@ -133,6 +134,8 @@ const CreditCardForm = ({ onSubmit }: Props) => {
         }
         onBlur={() => setTouched({ ...touched, expirationDateYY: true })}
         error={errors.expirationDateYY}
+        type="number"
+        required
       />
       <TextField
         name="cvv"
@@ -142,6 +145,8 @@ const CreditCardForm = ({ onSubmit }: Props) => {
         onChange={(e) => setValues({ ...values, cvv: e.target.value })}
         onBlur={() => setTouched({ ...touched, cvv: true })}
         error={errors.cvv}
+        type="number"
+        required
       />
       <br />
       <SelectCountry label="Select Country" />

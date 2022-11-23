@@ -2,7 +2,6 @@ import { InputHTMLAttributes } from "react";
 import styles from "./TextField.module.scss";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
-  name: string;
   label: string;
   error?: string;
 }

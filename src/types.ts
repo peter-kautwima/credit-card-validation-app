@@ -3,7 +3,7 @@ export type AppState = {
 };
 
 export type Card = {
-  id: string;
+  id?: string;
   name: string;
   country: string;
   cardNumber: string;

@@ -20,14 +20,12 @@ function App() {
   });
   const handleCardSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("e", e);
     const newCard = {
-      id: `${state.cards.length + 1}`,
-      name: `John Doe ${state.cards.length + 1}`,
-      country: "United States",
-      cardNumber: "1234 5678 9012 3456",
-      expirationDate: "01/2025",
-      cvv: "123",
+      name: e.target[0].value,
+      country: e.target[1].value,
+      cardNumber: e.target[2].value,
+      expirationDate: `${e.target[3].value}/${e.target[4].value}`,
+      cvv: e.target[5].value,
     };
     const newCards = [...state.cards, newCard];
     setState({ cards: newCards });
