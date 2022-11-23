@@ -1,3 +1,7 @@
+export type AppState = {
+  cards: Card[];
+};
+
 export type Card = {
   id: string;
   name: string;
