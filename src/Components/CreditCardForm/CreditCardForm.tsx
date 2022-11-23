@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
+import CustomButton from "../CustomButton/CustomButton";
 import SelectCountry from "../SelectCountry/SelectCountry";
 import TextField from "../TextField/TextField";
+import { Card } from "../../types";
 
 type Props = {};
+
+type AppState = {
+  cards: Card[];
+};
 
 type Values = {
   name: string;
@@ -77,6 +83,25 @@ const CreditCardForm = (props: Props) => {
     setErrors(newErrors);
   };
 
+  const existingCards = sessionStorage.getItem("cards");
+  const [state, setState] = useState<AppState>({
+    cards: existingCards !== null ? JSON.parse(existingCards) : [],
+  });
+  const handleCardSubmit = () => {
+    const newCard = {
+      id: `${state.cards.length + 1}`,
+      name: `John Doe ${state.cards.length + 1}`,
+      country: "United States",
+      cardNumber: "1234 5678 9012 3456",
+      expirationDate: "01/2025",
+      cvv: "123",
+    };
+    const newCards = [...state.cards, newCard];
+    setState({ cards: newCards });
+    // store cards in sessionStorage
+    sessionStorage.setItem("cards", JSON.stringify(newCards));
+  };
+
   // Listen for changes in the values state and validate the inputs
   useEffect(() => {
     handleValidaton();
@@ -134,6 +159,7 @@ const CreditCardForm = (props: Props) => {
       />
       <br />
       <SelectCountry label="Select Country" />
+      <CustomButton onClick={handleCardSubmit}>Save Card</CustomButton>
     </form>
   );
 };

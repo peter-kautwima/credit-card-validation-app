@@ -23,29 +23,12 @@ function App() {
   const [state, setState] = useState<AppState>({
     cards: existingCards !== null ? JSON.parse(existingCards) : [],
   });
-  const handleCardSubmit = () => {
-    const newCard = {
-      id: `${state.cards.length + 1}`,
-      name: `John Doe ${state.cards.length + 1}`,
-      country: "United States",
-      cardNumber: "1234 5678 9012 3456",
-      expirationDate: "01/2025",
-      cvv: "123",
-    };
-    const newCards = [...state.cards, newCard];
-    setState({ cards: newCards });
-    // store cards in sessionStorage
-    sessionStorage.setItem("cards", JSON.stringify(newCards));
-  };
 
   return (
     <section>
       <section>
         <CreditCardForm />
         <div className="App">
-          <CustomButton onClick={handleCardSubmit} className="root">
-            Save Card
-          </CustomButton>
           <Modal />
         </div>
       </section>
