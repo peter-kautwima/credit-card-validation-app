@@ -1,24 +1,32 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import SelectCountry from "../SelectCountry/SelectCountry";
 import TextField from "../TextField/TextField";
 
 type Props = {};
 
 type Values = {
-  name: string | null;
-  cardNumber: number | null;
-  expirationDateMM: number | null;
-  expirationDateYY: number | null;
-  cvv: number | null;
+  name: string;
+  cardNumber: string;
+  expirationDateMM: string;
+  expirationDateYY: string;
+  cvv: string;
+};
+
+type Errors = {
+  [Property in keyof Values]?: string;
+};
+
+type Touched = {
+  [Property in keyof Values]?: boolean;
 };
 
 const CardValidator = (props: Props) => {
   const [values, setValues] = useState<Values>({
-    name: null,
-    cardNumber: null,
-    expirationDateMM: null,
-    expirationDateYY: null,
-    cvv: null,
+    name: "",
+    cardNumber: "",
+    expirationDateMM: "",
+    expirationDateYY: "",
+    cvv: "",
   });
   const [errors, setErrors] = useState<Errors>({
     name: "Name is required",

@@ -1,27 +1,13 @@
-import React, { ChangeEvent } from "react";
+import { InputHTMLAttributes } from "react";
 import styles from "./TextField.module.scss";
 
-type Props = {
+interface Props extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   label: string;
-  value: string | number | null;
-  placeholder?: string;
   error?: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  onFocus?: () => void;
-  onBlur?: () => void;
-};
+}
 
-const TextField = ({
-  name,
-  label,
-  value,
-  placeholder,
-  error,
-  onChange,
-  onFocus,
-  onBlur,
-}: Props) => {
+const TextField = ({ name, label, error, ...props }: Props) => {
   const classes = [
     styles["text-field"],
     error ? styles["text-field--error"] : "",
@@ -29,15 +15,7 @@ const TextField = ({
   return (
     <div className={classes}>
       <label htmlFor={name}>{label}</label>
-      <input
-        type="text"
-        id={name}
-        value={value}
-        placeholder={placeholder}
-        onChange={onChange}
-        onFocus={onFocus}
-        onBlur={onBlur}
-      />
+      <input id={name} name={name} {...props} />
       {error && <span className={styles.error}>{error}</span>}
     </div>
   );
