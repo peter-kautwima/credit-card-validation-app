@@ -1,0 +1,21 @@
+.text-field {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.text-field--error {
+  input {
+    border-color: red;
+  }
+}
+
+.error {
+  color: red;
+}
+
+.label {
+  margin-right: 10px;
+}

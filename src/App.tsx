@@ -1,15 +1,9 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
+import React, { useState } from "react";
 import "./App.css";
-import CustomButton from "./Components/CustomButton/CustomButton";
-import CardValidator from "./Components/CardValidator/CardValidator";
 import CardsTable, { Column } from "./Components/CardsTable/CardsTable";
 import Modal from "./Components/Modal/Modal";
-import { Card } from "./types";
-
-type AppState = {
-  cards: Card[];
-};
+import { AppState, Card } from "./types";
+import CreditCardForm from "./Components/CreditCardForm/CreditCardForm";
 
 export const columns: Column[] = [
   { accessor: "name", label: "Name" },
@@ -24,14 +18,14 @@ function App() {
   const [state, setState] = useState<AppState>({
     cards: existingCards !== null ? JSON.parse(existingCards) : [],
   });
-  const handleCardSubmit = () => {
+  const handleCardSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const newCard = {
-      id: `${state.cards.length + 1}`,
-      name: `John Doe ${state.cards.length + 1}`,
-      country: "United States",
-      cardNumber: "1234 5678 9012 3456",
-      expirationDate: "01/2025",
-      cvv: "123",
+      name: e.target[0].value,
+      country: e.target[1].value,
+      cardNumber: e.target[2].value,
+      expirationDate: `${e.target[3].value}/${e.target[4].value}`,
+      cvv: e.target[5].value,
     };
     const newCards = [...state.cards, newCard];
     setState({ cards: newCards });
@@ -42,11 +36,8 @@ function App() {
   return (
     <section>
       <section>
-        <CardValidator />
+        <CreditCardForm onSubmit={handleCardSubmit} state={state} />
         <div className="App">
-          <CustomButton onClick={handleCardSubmit} className="root">
-            Save Card
-          </CustomButton>
           <Modal />
         </div>
       </section>
