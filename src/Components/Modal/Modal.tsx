@@ -40,13 +40,7 @@ export default function MyModal() {
                     Manage Blackisted Countries
                   </Dialog.Title>
                   <form>
-                    <SelectCountry
-                      onChange={function (
-                        e: ChangeEvent<HTMLSelectElement>
-                      ): void {
-                        throw new Error("Function not implemented.");
-                      }}
-                    />
+                    <SelectCountry label="Select Country" />
                     <button>
                       <p>Ban Country</p>
                     </button>

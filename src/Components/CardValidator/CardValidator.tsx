@@ -95,7 +95,7 @@ const CardValidator = (props: Props) => {
       />
       <TextField
         name="expiration-date-mm"
-        label="Expiration date: MM"
+        label="Expiration Date: MM"
         value={values.expirationDateMM}
         placeholder="MM"
         onChange={(e) =>
@@ -106,7 +106,7 @@ const CardValidator = (props: Props) => {
       />
       <TextField
         name="expiration-date-yy"
-        label="Expiration date: YY"
+        label="Expiration Date: YY"
         value={values.expirationDateYY}
         placeholder="MM"
         onChange={(e) =>
@@ -119,17 +119,13 @@ const CardValidator = (props: Props) => {
         name="cvv"
         label="CVV"
         value={values.cvv}
-        placeholder="cvv"
+        placeholder="CVV"
         onChange={(e) => setValues({ ...values, cvv: e.target.value })}
         onBlur={() => setTouched({ ...touched, cvv: true })}
         error={errors.cvv}
       />
       <br />
-      <SelectCountry
-        onChange={function (e: React.ChangeEvent<HTMLSelectElement>): void {
-          throw new Error("Function not implemented.");
-        }}
-      />
+      <SelectCountry label="Select Country" />
     </form>
   );
 };
