@@ -2,10 +2,12 @@ import React, { SelectHTMLAttributes } from "react";
 import countries from "./countries";
 import styles from "./SelectCountry.module.scss";
 
-interface Props {
+interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
   label: string;
+  error?: string;
 }
-const SelectCountry = ({ label, ...props }: Props) => {
+
+const SelectCountry = ({ label, error, ...props }: Props) => {
   return (
     <div className={styles.select}>
       <label htmlFor="country" className={styles.label}>
@@ -19,6 +21,7 @@ const SelectCountry = ({ label, ...props }: Props) => {
           </option>
         ))}
       </select>
+      {error && <span className={styles.error}>{error}</span>}
     </div>
   );
 };

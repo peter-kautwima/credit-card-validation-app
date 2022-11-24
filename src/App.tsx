@@ -18,15 +18,25 @@ function App() {
   const [state, setState] = useState<AppState>({
     cards: existingCards !== null ? JSON.parse(existingCards) : [],
   });
-  const handleCardSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+
+  const handleCardSubmit = (e: any) => {
+    const {
+      name,
+      cardNumber,
+      expirationDateMM,
+      expirationDateYY,
+      country,
+      cvv,
+    } = e.target;
+
     const newCard = {
-      name: e.target[0].value,
-      country: e.target[1].value,
-      cardNumber: e.target[2].value,
-      expirationDate: `${e.target[3].value}/${e.target[4].value}`,
-      cvv: e.target[5].value,
+      name: name?.value,
+      country: country?.value,
+      cardNumber: cardNumber?.value,
+      expirationDate: `${expirationDateMM?.value}/${expirationDateYY?.value}`,
+      cvv: cvv?.value,
     };
+
     const newCards = [...state.cards, newCard];
     setState({ cards: newCards });
     // store cards in sessionStorage
