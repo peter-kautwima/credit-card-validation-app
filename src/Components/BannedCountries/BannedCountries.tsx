@@ -19,6 +19,13 @@ const BannedCountries = ({ bannedCountries, setBannedCountries }: Props) => {
     }
   };
 
+  const handleRemoveCountry = (country: Country) => {
+    const newBannedCountries = bannedCountries.filter(
+      (c) => c.value !== country.value
+    );
+    setBannedCountries(newBannedCountries);
+  };
+
   return (
     <form>
       <SelectCountry label="Select Country" onChange={handleCountrySelect} />
@@ -38,7 +45,10 @@ const BannedCountries = ({ bannedCountries, setBannedCountries }: Props) => {
       <h4>Banned Countries</h4>
       <ul>
         {bannedCountries.map((country) => (
-          <li key={country.value}>{country.label}</li>
+          <li key={country.value}>
+            {country.label}
+            <button onClick={() => handleRemoveCountry(country)}>X</button>
+          </li>
         ))}
       </ul>
     </form>
