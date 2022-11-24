@@ -7,8 +7,8 @@ import {
 
 describe("validation", () => {
   it("validate CVV", () => {
-    assert.equal(validateLength("4589", 3), "Must be at 3 characters");
-    assert.equal(validateLength("93", 3), "Must be at 3 characters");
+    assert.equal(validateLength("4589", 3), "Must be 3 characters");
+    assert.equal(validateLength("93", 3), "Must be 3 characters");
     assert.equal(validateLength("943", 3), "");
   });
 
@@ -37,9 +37,9 @@ describe("validation", () => {
   });
 
   it("validate Card Number", () => {
-    assert.equal(validateLength("4589", 16), "Must be at least 16 characters");
-    assert.equal(validateLength("93", 16), "Must be at least 16 characters");
-    assert.equal(validateLength("943", 16), "Must be at least 16 characters");
+    assert.equal(validateLength("4589", 16), "Must be 16 characters");
+    assert.equal(validateLength("93", 16), "Must be 16 characters");
+    assert.equal(validateLength("943", 16), "Must be 16 characters");
     assert.equal(validateLength("9431234567891234", 16), "");
   });
 });
