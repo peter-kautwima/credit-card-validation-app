@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 import CardsTable, { Column } from "./components/CardsTable/CardsTable";
 import Modal from "./components/Modal/Modal";
-import { AppState, Card } from "./types";
+import { AppState, Card, Country } from "./types";
 import CreditCardForm from "./components/CreditCardForm/CreditCardForm";
 import { getSelectedCountry } from "./utils";
 
@@ -24,9 +24,12 @@ const transformCardRow = (card: Card) => {
 
 function App() {
   const existingCards = sessionStorage.getItem("cards");
+  const bannedCountries = sessionStorage.getItem("bannedCountries");
+
   const [state, setState] = useState<AppState>({
     cards: existingCards !== null ? JSON.parse(existingCards) : [],
-    bannedCountries: [],
+    bannedCountries:
+      bannedCountries !== null ? JSON.parse(bannedCountries) : [],
   });
 
   const handleCardSubmit = (e: any) => {
@@ -52,6 +55,11 @@ function App() {
     sessionStorage.setItem("cards", JSON.stringify(newCards));
   };
 
+  const handleSetBannedCountries = (bannedCountries: Country[]) => {
+    setState({ ...state, bannedCountries });
+    sessionStorage.setItem("bannedCountries", JSON.stringify(bannedCountries));
+  };
+
   return (
     <section>
       <section>
@@ -62,9 +70,7 @@ function App() {
         <div className="App">
           <Modal
             bannedCountries={state.bannedCountries}
-            setBannedCountries={(bannedCountries) =>
-              setState({ ...state, bannedCountries })
-            }
+            setBannedCountries={handleSetBannedCountries}
           />
         </div>
       </section>
