@@ -2,10 +2,16 @@ import { useCallback, useEffect, useState } from "react";
 import Button from "../Button/Button";
 import SelectCountry from "../SelectCountry/SelectCountry";
 import TextField from "../TextField/TextField";
-import { Country } from "../../types";
+import { Card, Country } from "../../types";
+import {
+  validateLength,
+  validateRequired,
+  validationNumberRange,
+} from "../../ValidationUtil/validation";
 
 type Props = {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  cards: Card[];
   bannedCountries: Country[];
 };
 
@@ -26,15 +32,17 @@ type Touched = {
   [Property in keyof Values]?: boolean;
 };
 
-const CreditCardForm = ({ onSubmit, bannedCountries }: Props) => {
-  const [values, setValues] = useState<Values>({
-    name: "",
-    cardNumber: "",
-    expirationDateMM: "",
-    expirationDateYY: "",
-    country: "",
-    cvv: "",
-  });
+const initialValues = {
+  name: "",
+  cardNumber: "",
+  expirationDateMM: "",
+  expirationDateYY: "",
+  country: "",
+  cvv: "",
+};
+
+const CreditCardForm = ({ onSubmit, bannedCountries, cards }: Props) => {
+  const [values, setValues] = useState<Values>(initialValues);
 
   const [errors, setErrors] = useState<Errors>({});
 
@@ -56,52 +64,50 @@ const CreditCardForm = ({ onSubmit, bannedCountries }: Props) => {
   const handleValidaton = () => {
     const newErrors = { ...errors };
 
-    if (!values.name && touched.name) {
-      newErrors.name = "Name is required";
-    } else {
-      newErrors.name = "";
-    }
+    const handleRequiredValidation = (name: string, error: string) => {
+      validateRequired(name, values, newErrors, touched, error);
+    };
 
-    if (!values.cardNumber && touched.cardNumber) {
-      newErrors.cardNumber = "Card number is required";
-    } else {
-      newErrors.cardNumber = "";
-    }
+    handleRequiredValidation("name", "Name is required");
+    handleRequiredValidation("country", "Country is required");
 
-    if (!values.expirationDateMM && touched.expirationDateMM) {
-      newErrors.expirationDateMM = "Expiration date is required";
-    } else {
-      newErrors.expirationDateMM = "";
-    }
+    const getCardNumberErrors = () => {
+      let cardErrors = "";
+      const isCardAlreadyAdded = (cardNumber: string) => {
+        return cards.some((card) => card.cardNumber === cardNumber);
+      };
 
-    if (!values.expirationDateYY && touched.expirationDateYY) {
-      newErrors.expirationDateYY = "Expiration date is required";
-    } else {
-      newErrors.expirationDateYY = "";
-    }
+      cardErrors = touched?.cardNumber
+        ? validateLength(values.cardNumber, 16)
+        : "";
 
-    if (!values.cvv && touched.cvv) {
-      newErrors.cvv = "CVV is required";
-    } else {
-      newErrors.cvv = "";
-    }
+      if (isCardAlreadyAdded(values.cardNumber)) {
+        cardErrors = "Card already added";
+      } else {
+        newErrors.cardNumber = cardErrors;
+      }
 
-    if (!values.country && touched.country) {
-      newErrors.country = "Country is required";
-    } else {
-      newErrors.country = "";
-    }
+      return cardErrors;
+    };
 
-    if (
-      values.country &&
-      bannedCountries.map((c) => c.value).includes(values.country)
-    ) {
-      newErrors.country = "Country is banned";
-    } else {
-      newErrors.country = "";
-    }
+    const cvvErrors = touched?.cvv ? validateLength(values.cvv, 3) : "";
 
-    setErrors(newErrors);
+    const expirationDateMMErrors = touched?.expirationDateMM
+      ? validationNumberRange(values.expirationDateMM, 1, 12)
+      : "";
+
+    const expirationDateYYErrors = touched?.expirationDateYY
+      ? // @todo don't hard code the year
+        validationNumberRange(values.expirationDateYY, 23, 99)
+      : "";
+
+    setErrors({
+      ...newErrors,
+      cardNumber: getCardNumberErrors(),
+      cvv: cvvErrors,
+      expirationDateMM: expirationDateMMErrors,
+      expirationDateYY: expirationDateYYErrors,
+    });
   };
 
   const isValid = useCallback(() => {
@@ -118,6 +124,9 @@ const CreditCardForm = ({ onSubmit, bannedCountries }: Props) => {
 
     if (isValid()) {
       onSubmit(e);
+      setValues(initialValues);
+      setTouched({});
+      setErrors({});
     }
   };
 
