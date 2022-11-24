@@ -2,6 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { ChangeEvent, Fragment, useState } from "react";
 import countries from "../../data/countries";
 import { Country } from "../../types";
+import { getSelectedCountry } from "../../utils";
 import Button from "../Button/Button";
 import SelectCountry from "../SelectCountry/SelectCountry";
 
@@ -24,13 +25,6 @@ export default function MyModal({
   function openModal() {
     setIsOpen(true);
   }
-
-  const getSelectedCountry = (selectedCountry: string): Country | undefined => {
-    const country = countries.find(
-      (country) => country.value === selectedCountry
-    );
-    return country;
-  };
 
   const handleCountrySelect = (e: ChangeEvent<HTMLSelectElement>) => {
     const countryObj = getSelectedCountry(e.target.value);
