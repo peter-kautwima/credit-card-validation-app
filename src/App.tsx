@@ -4,6 +4,7 @@ import CardsTable, { Column } from "./components/CardsTable/CardsTable";
 import Modal from "./components/Modal/Modal";
 import { AppState, Card } from "./types";
 import CreditCardForm from "./components/CreditCardForm/CreditCardForm";
+import { getSelectedCountry } from "./utils";
 
 export const columns: Column[] = [
   { accessor: "name", label: "Name" },
@@ -12,6 +13,14 @@ export const columns: Column[] = [
   { accessor: "expirationDate", label: "Exp Date" },
   { accessor: "cvv", label: "CVV" },
 ];
+
+const transformCardRow = (card: Card) => {
+  const countryName = getSelectedCountry(card.country)?.label ?? "";
+  return {
+    ...card,
+    country: countryName,
+  };
+};
 
 function App() {
   const existingCards = sessionStorage.getItem("cards");
@@ -60,7 +69,10 @@ function App() {
         </div>
       </section>
       <section>
-        <CardsTable data={state.cards} columns={columns} />
+        <CardsTable
+          data={state.cards.map((card) => transformCardRow(card))}
+          columns={columns}
+        />
       </section>
     </section>
   );
