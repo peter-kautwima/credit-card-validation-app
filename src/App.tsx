@@ -92,6 +92,7 @@ function App() {
           />
         )}
       </section>
+
       <Modal
         title="Add Credit Cards"
         isOpen={isAddNewCardModalOpen}

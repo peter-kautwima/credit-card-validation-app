@@ -1,6 +1,6 @@
 export const validateLength = (value: string, length: number) => {
   if (value.length !== length) {
-    return `Must be at least ${length} characters`;
+    return `Must be ${length} characters`;
   }
   return "";
 };
