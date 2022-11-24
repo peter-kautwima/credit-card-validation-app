@@ -83,10 +83,14 @@ function App() {
       </section>
 
       <section>
-        <CardsTable
-          data={state.cards.map((card) => transformCardRow(card))}
-          columns={columns}
-        />
+        {state.cards.length === 0 ? (
+          <p>No cards added yet.</p>
+        ) : (
+          <CardsTable
+            data={state.cards.map((card) => transformCardRow(card))}
+            columns={columns}
+          />
+        )}
       </section>
       <Modal
         title="Add Credit Cards"
