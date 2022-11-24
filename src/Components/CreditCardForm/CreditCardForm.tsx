@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CustomButton from "../CustomButton/CustomButton";
 import SelectCountry from "../SelectCountry/SelectCountry";
 import TextField from "../TextField/TextField";
@@ -15,6 +15,7 @@ type Values = {
   cardNumber: string;
   expirationDateMM: string;
   expirationDateYY: string;
+  country: string;
   cvv: string;
 };
 
@@ -32,55 +33,84 @@ const CreditCardForm = ({ onSubmit }: Props) => {
     cardNumber: "",
     expirationDateMM: "",
     expirationDateYY: "",
+    country: "",
     cvv: "",
   });
-  const [errors, setErrors] = useState<Errors>({
-    name: "Name is required",
-    cardNumber: "Card number is required",
-    expirationDateMM: "Expiration date is required",
-    expirationDateYY: "Expiration date is required",
-    cvv: "CVV is required",
-  });
+
+  const [errors, setErrors] = useState<Errors>({});
 
   const [touched, setTouched] = useState<Touched>({
     name: false,
   });
 
+  const setAllTouched = () => {
+    setTouched({
+      name: true,
+      cardNumber: true,
+      expirationDateMM: true,
+      expirationDateYY: true,
+      country: true,
+      cvv: true,
+    });
+  };
+
   const handleValidaton = () => {
     const newErrors = { ...errors };
 
-    /** @todo abstract into validation util function.`validateRequired` */
     if (!values.name && touched.name) {
       newErrors.name = "Name is required";
     } else {
       newErrors.name = "";
     }
 
-    if (!values.cardNumber && touched.name) {
+    if (!values.cardNumber && touched.cardNumber) {
       newErrors.cardNumber = "Card number is required";
     } else {
       newErrors.cardNumber = "";
     }
 
-    if (!values.expirationDateMM && touched.name) {
+    if (!values.expirationDateMM && touched.expirationDateMM) {
       newErrors.expirationDateMM = "Expiration date is required";
     } else {
       newErrors.expirationDateMM = "";
     }
 
-    if (!values.expirationDateYY && touched.name) {
+    if (!values.expirationDateYY && touched.expirationDateYY) {
       newErrors.expirationDateYY = "Expiration date is required";
     } else {
       newErrors.expirationDateYY = "";
     }
 
-    if (!values.cvv && touched.name) {
+    if (!values.cvv && touched.cvv) {
       newErrors.cvv = "CVV is required";
     } else {
       newErrors.cvv = "";
     }
 
+    if (!values.country && touched.country) {
+      newErrors.country = "Country is required";
+    } else {
+      newErrors.country = "";
+    }
+
     setErrors(newErrors);
+  };
+
+  const isValid = useCallback(() => {
+    return Object.values(errors).filter((error) => error !== "").length === 0;
+  }, [errors]);
+
+  useEffect(() => {
+    handleValidaton();
+  }, []);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setAllTouched();
+
+    if (isValid()) {
+      onSubmit(e);
+    }
   };
 
   // Listen for changes in the values state and validate the inputs
@@ -88,7 +118,7 @@ const CreditCardForm = ({ onSubmit }: Props) => {
     handleValidaton();
   }, [values, touched]);
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={handleSubmit}>
       <TextField
         name="name"
         label="Name"
@@ -98,10 +128,9 @@ const CreditCardForm = ({ onSubmit }: Props) => {
         onBlur={() => setTouched({ ...touched, name: true })}
         error={errors.name}
         type="string"
-        required
       />
       <TextField
-        name="card-number"
+        name="cardNumber"
         label="Card Number"
         value={values.cardNumber}
         placeholder="XXXX XXXX XXXX XXXX"
@@ -109,10 +138,9 @@ const CreditCardForm = ({ onSubmit }: Props) => {
         onBlur={() => setTouched({ ...touched, cardNumber: true })}
         error={errors.cardNumber}
         type="number"
-        required
       />
       <TextField
-        name="expiration-date-mm"
+        name="expirationDateMM"
         label="Expiration Date: MM"
         value={values.expirationDateMM}
         placeholder="MM"
@@ -122,10 +150,9 @@ const CreditCardForm = ({ onSubmit }: Props) => {
         onBlur={() => setTouched({ ...touched, expirationDateMM: true })}
         error={errors.expirationDateMM}
         type="number"
-        required
       />
       <TextField
-        name="expiration-date-yy"
+        name="expirationDateYY"
         label="Expiration Date: YY"
         value={values.expirationDateYY}
         placeholder="MM"
@@ -135,7 +162,6 @@ const CreditCardForm = ({ onSubmit }: Props) => {
         onBlur={() => setTouched({ ...touched, expirationDateYY: true })}
         error={errors.expirationDateYY}
         type="number"
-        required
       />
       <TextField
         name="cvv"
@@ -146,10 +172,15 @@ const CreditCardForm = ({ onSubmit }: Props) => {
         onBlur={() => setTouched({ ...touched, cvv: true })}
         error={errors.cvv}
         type="number"
-        required
       />
       <br />
-      <SelectCountry label="Select Country" />
+      <SelectCountry
+        label="Select Country"
+        name="country"
+        onChange={(e) => setValues({ ...values, country: e.target.value })}
+        onBlur={() => setTouched({ ...touched, country: true })}
+        error={errors.country}
+      />
       <CustomButton type="submit">Save Card</CustomButton>
     </form>
   );
