@@ -20,8 +20,7 @@
 
 ## To Do & Notable Bugs
 
-    1. Change Text Colour form to black.
-    2. Add Banned Countries validation to form.
+    1. Add Banned Countries validation to form.
+    2. Disable adding a Banned Country on the CreditCardForm to the CreditCardTable on the initial render.
     3. Can currently ban the same country multiple times.
-    4. Currently the Credit Card validation is hard coded to the year 2023.
-    5. Add Cypress and snapshot tests.
+    4. Credit Card validation is hard coded to the year 2023.
