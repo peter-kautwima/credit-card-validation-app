@@ -1,99 +1,33 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { ChangeEvent, Fragment, useState } from "react";
-import countries from "../../data/countries";
-import { Country } from "../../types";
-import { getSelectedCountry } from "../../utils";
-import Button from "../Button/Button";
-import SelectCountry from "../SelectCountry/SelectCountry";
+import { Fragment, useState } from "react";
+import styles from "./Modal.module.scss";
 
 type Props = {
-  bannedCountries: Country[];
-  setBannedCountries: (bannedCountries: Country[]) => void;
+  title: string;
+  isOpen: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
 };
 
-export default function MyModal({
-  bannedCountries,
-  setBannedCountries,
-}: Props) {
-  let [isOpen, setIsOpen] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  const handleCountrySelect = (e: ChangeEvent<HTMLSelectElement>) => {
-    const countryObj = getSelectedCountry(e.target.value);
-    if (countryObj) {
-      setSelectedCountry(countryObj);
-    }
-  };
-
+export default function Modal({ title, isOpen, onClose, children }: Props) {
   return (
     <>
-      <div>
-        <button type="button" onClick={openModal}>
-          Manage Blacklisted Countries
-        </button>
-      </div>
-
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" onClose={closeModal}>
+        <Dialog as="div" onClose={onClose}>
           <Transition.Child as={Fragment}>
             <div />
           </Transition.Child>
-
-          <div>
-            <div>
-              <Transition.Child as={Fragment}>
-                <Dialog.Panel>
-                  <Dialog.Title as="h3">
-                    Manage Blackisted Countries
-                  </Dialog.Title>
-                  <form>
-                    <SelectCountry
-                      label="Select Country"
-                      onChange={handleCountrySelect}
-                    />
-                    <Button
-                      onClick={() => {
-                        console.log("adding banned country", selectedCountry);
-
-                        if (selectedCountry) {
-                          console.log([...bannedCountries, selectedCountry]);
-                          setBannedCountries([
-                            ...bannedCountries,
-                            selectedCountry,
-                          ]);
-                        }
-                      }}
-                    >
-                      Ban Country
-                    </Button>
-                  </form>
-                  <ul>
-                    {bannedCountries.map((country) => (
-                      <li key={country.value}>{country.label}</li>
-                    ))}
-                  </ul>
-                  <div>
-                    <h4>Banned Countries</h4>
-                    {/* map over banned countries and display them here with a delete button */}
-                    <button onClick={closeModal}>
-                      <p>Cancel</p>
-                    </button>
-                    <button type="button" onClick={closeModal}>
-                      Save & Exit!
-                    </button>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
+          <Transition.Child as={Fragment}>
+            <Dialog.Panel className={styles.modal}>
+              <div>
+                <Dialog.Title as="h3">
+                  {title}
+                  <button onClick={onClose}>X</button>
+                </Dialog.Title>
+                <div className={styles.body}>{children}</div>
+              </div>
+            </Dialog.Panel>
+          </Transition.Child>
         </Dialog>
       </Transition>
     </>

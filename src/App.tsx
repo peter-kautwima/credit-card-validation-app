@@ -5,6 +5,8 @@ import Modal from "./components/Modal/Modal";
 import { AppState, Card, Country } from "./types";
 import CreditCardForm from "./components/CreditCardForm/CreditCardForm";
 import { getSelectedCountry } from "./utils";
+import Button from "./components/Button/Button";
+import BannedCountries from "./components/BannedCountries/BannedCountries";
 
 export const columns: Column[] = [
   { accessor: "name", label: "Name" },
@@ -32,6 +34,10 @@ function App() {
       bannedCountries !== null ? JSON.parse(bannedCountries) : [],
   });
 
+  const [isAddNewCardModalOpen, setIsAddNewCardModalOpen] = useState(false);
+  const [isBannedCountriesModalOpen, setIsBannedCountriesModalOpen] =
+    useState(false);
+
   const handleCardSubmit = (e: any) => {
     const {
       name,
@@ -53,6 +59,7 @@ function App() {
     const newCards = [...state.cards, newCard];
     setState({ ...state, cards: newCards });
     sessionStorage.setItem("cards", JSON.stringify(newCards));
+    setIsAddNewCardModalOpen(false);
   };
 
   const handleSetBannedCountries = (bannedCountries: Country[]) => {
@@ -63,23 +70,43 @@ function App() {
   return (
     <section>
       <section>
-        <CreditCardForm
-          onSubmit={handleCardSubmit}
-          cards={state.cards}
-          bannedCountries={state.bannedCountries}
-        />
-        <div className="App">
-          <Modal
-            bannedCountries={state.bannedCountries}
-            setBannedCountries={handleSetBannedCountries}
-          />
-        </div>
+        <Button onClick={() => setIsAddNewCardModalOpen(true)}>
+          Add New Card
+        </Button>
       </section>
       <section>
         <CardsTable
           data={state.cards.map((card) => transformCardRow(card))}
           columns={columns}
         />
+        <Button onClick={() => setIsBannedCountriesModalOpen(true)}>
+          Banned Countries
+        </Button>
+
+        <Modal
+          title="Add Credit Cards"
+          isOpen={isAddNewCardModalOpen}
+          onClose={() => setIsAddNewCardModalOpen(false)}
+        >
+          <CreditCardForm
+            onSubmit={handleCardSubmit}
+            cards={state.cards}
+            bannedCountries={state.bannedCountries}
+          />
+        </Modal>
+
+        <Modal
+          title="Banned Countries"
+          isOpen={isBannedCountriesModalOpen}
+          onClose={() => setIsBannedCountriesModalOpen(false)}
+        >
+          <BannedCountries
+            bannedCountries={state.bannedCountries}
+            setBannedCountries={(bannedCountries) => {
+              handleSetBannedCountries(bannedCountries);
+            }}
+          />
+        </Modal>
       </section>
     </section>
   );
