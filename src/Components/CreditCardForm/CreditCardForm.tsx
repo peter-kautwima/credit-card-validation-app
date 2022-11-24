@@ -3,6 +3,7 @@ import Button from "../Button/Button";
 import SelectCountry from "../SelectCountry/SelectCountry";
 import TextField from "../TextField/TextField";
 import { Country } from "../../types";
+import { validateRequired } from "../../ValidationUtil/validation";
 
 type Props = {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -56,50 +57,17 @@ const CreditCardForm = ({ onSubmit, bannedCountries }: Props) => {
   const handleValidaton = () => {
     const newErrors = { ...errors };
 
-    if (!values.name && touched.name) {
-      newErrors.name = "Name is required";
-    } else {
-      newErrors.name = "";
-    }
+    const handleRequiredValidation = (name: string, error: string) => {
+      validateRequired(name, values, newErrors, touched, error);
+    };
 
-    if (!values.cardNumber && touched.cardNumber) {
-      newErrors.cardNumber = "Card number is required";
-    } else {
-      newErrors.cardNumber = "";
-    }
-
-    if (!values.expirationDateMM && touched.expirationDateMM) {
-      newErrors.expirationDateMM = "Expiration date is required";
-    } else {
-      newErrors.expirationDateMM = "";
-    }
-
-    if (!values.expirationDateYY && touched.expirationDateYY) {
-      newErrors.expirationDateYY = "Expiration date is required";
-    } else {
-      newErrors.expirationDateYY = "";
-    }
-
-    if (!values.cvv && touched.cvv) {
-      newErrors.cvv = "CVV is required";
-    } else {
-      newErrors.cvv = "";
-    }
-
-    if (!values.country && touched.country) {
-      newErrors.country = "Country is required";
-    } else {
-      newErrors.country = "";
-    }
-
-    if (
-      values.country &&
-      bannedCountries.map((c) => c.value).includes(values.country)
-    ) {
-      newErrors.country = "Country is banned";
-    } else {
-      newErrors.country = "";
-    }
+    handleRequiredValidation("name", "Name is required");
+    handleRequiredValidation("cardNumber", "Card number is required");
+    handleRequiredValidation("expirationDateMM", "Expiration date is required");
+    handleRequiredValidation("expirationDateYY", "Expiration date is required");
+    handleRequiredValidation("cvv", "CVV is required");
+    handleRequiredValidation("country", "Country is required");
+    handleRequiredValidation("name", "Name is required");
 
     setErrors(newErrors);
   };

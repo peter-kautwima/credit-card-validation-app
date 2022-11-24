@@ -5,12 +5,19 @@ export const validateLength = (value: string, length: number) => {
   return true;
 };
 
-// validate required
-export const validateRequired = (value: string) => {
-  if (!value) {
-    return "Required";
+export const validateRequired = (
+  name: string,
+  values: any,
+  errors: any,
+  touched: any,
+  error: string
+) => {
+  if (!values[name] && touched[name]) {
+    errors[name] = error;
+  } else {
+    errors[name] = "";
   }
-  return true;
+  return errors;
 };
 
 export const validationNumbersOnly = (value: string | number) => {
