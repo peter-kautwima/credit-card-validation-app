@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import Button from "../Button/Button";
 import SelectCountry from "../SelectCountry/SelectCountry";
 import TextField from "../TextField/TextField";
-import { Country } from "../../types";
+import { Card, Country } from "../../types";
 import {
   validateLength,
   validateRequired,
@@ -11,6 +11,7 @@ import {
 
 type Props = {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  cards: Card[];
   bannedCountries: Country[];
 };
 
@@ -40,7 +41,7 @@ const initialValues = {
   cvv: "",
 };
 
-const CreditCardForm = ({ onSubmit, bannedCountries }: Props) => {
+const CreditCardForm = ({ onSubmit, bannedCountries, cards }: Props) => {
   const [values, setValues] = useState<Values>(initialValues);
 
   const [errors, setErrors] = useState<Errors>({});
@@ -70,9 +71,24 @@ const CreditCardForm = ({ onSubmit, bannedCountries }: Props) => {
     handleRequiredValidation("name", "Name is required");
     handleRequiredValidation("country", "Country is required");
 
-    const cardNumberErrors = touched?.cardNumber
-      ? validateLength(values.cardNumber, 16)
-      : "";
+    const getCardNumberErrors = () => {
+      let cardErrors = "";
+      const isCardAlreadyAdded = (cardNumber: string) => {
+        return cards.some((card) => card.cardNumber === cardNumber);
+      };
+
+      cardErrors = touched?.cardNumber
+        ? validateLength(values.cardNumber, 16)
+        : "";
+
+      if (isCardAlreadyAdded(values.cardNumber)) {
+        cardErrors = "Card already added";
+      } else {
+        newErrors.cardNumber = cardErrors;
+      }
+
+      return cardErrors;
+    };
 
     const cvvErrors = touched?.cvv ? validateLength(values.cvv, 3) : "";
 
@@ -87,7 +103,7 @@ const CreditCardForm = ({ onSubmit, bannedCountries }: Props) => {
 
     setErrors({
       ...newErrors,
-      cardNumber: cardNumberErrors,
+      cardNumber: getCardNumberErrors(),
       cvv: cvvErrors,
       expirationDateMM: expirationDateMMErrors,
       expirationDateYY: expirationDateYYErrors,

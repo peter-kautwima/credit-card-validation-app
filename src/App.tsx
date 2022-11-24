@@ -65,6 +65,7 @@ function App() {
       <section>
         <CreditCardForm
           onSubmit={handleCardSubmit}
+          cards={state.cards}
           bannedCountries={state.bannedCountries}
         />
         <div className="App">
