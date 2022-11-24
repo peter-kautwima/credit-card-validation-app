@@ -2,7 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { ChangeEvent, Fragment, useState } from "react";
 import countries from "../../data/countries";
 import { Country } from "../../types";
-import CustomButton from "../CustomButton/CustomButton";
+import Button from "../Button/Button";
 import SelectCountry from "../SelectCountry/SelectCountry";
 
 type Props = {
@@ -65,7 +65,7 @@ export default function MyModal({
                       label="Select Country"
                       onChange={handleCountrySelect}
                     />
-                    <CustomButton
+                    <Button
                       onClick={() => {
                         console.log("adding banned country", selectedCountry);
 
@@ -79,7 +79,7 @@ export default function MyModal({
                       }}
                     >
                       Ban Country
-                    </CustomButton>
+                    </Button>
                   </form>
                   <ul>
                     {bannedCountries.map((country) => (

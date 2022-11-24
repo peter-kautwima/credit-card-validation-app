@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./App.css";
-import CardsTable, { Column } from "./Components/CardsTable/CardsTable";
-import Modal from "./Components/Modal/Modal";
+import CardsTable, { Column } from "./components/CardsTable/CardsTable";
+import Modal from "./components/Modal/Modal";
 import { AppState, Card } from "./types";
-import CreditCardForm from "./Components/CreditCardForm/CreditCardForm";
+import CreditCardForm from "./components/CreditCardForm/CreditCardForm";
 
 export const columns: Column[] = [
   { accessor: "name", label: "Name" },
@@ -40,14 +40,16 @@ function App() {
 
     const newCards = [...state.cards, newCard];
     setState({ ...state, cards: newCards });
-    // store cards in sessionStorage
     sessionStorage.setItem("cards", JSON.stringify(newCards));
   };
 
   return (
     <section>
       <section>
-        <CreditCardForm onSubmit={handleCardSubmit} state={state} />
+        <CreditCardForm
+          onSubmit={handleCardSubmit}
+          bannedCountries={state.bannedCountries}
+        />
         <div className="App">
           <Modal
             bannedCountries={state.bannedCountries}

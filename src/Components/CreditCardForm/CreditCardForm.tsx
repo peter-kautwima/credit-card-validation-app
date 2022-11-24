@@ -1,13 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
-import CustomButton from "../CustomButton/CustomButton";
+import Button from "../Button/Button";
 import SelectCountry from "../SelectCountry/SelectCountry";
 import TextField from "../TextField/TextField";
-import { Card } from "../../types";
-import { AppState } from "../../types";
+import { Country } from "../../types";
 
 type Props = {
-  state: AppState;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  bannedCountries: Country[];
 };
 
 type Values = {
@@ -27,7 +26,7 @@ type Touched = {
   [Property in keyof Values]?: boolean;
 };
 
-const CreditCardForm = ({ onSubmit }: Props) => {
+const CreditCardForm = ({ onSubmit, bannedCountries }: Props) => {
   const [values, setValues] = useState<Values>({
     name: "",
     cardNumber: "",
@@ -89,6 +88,15 @@ const CreditCardForm = ({ onSubmit }: Props) => {
 
     if (!values.country && touched.country) {
       newErrors.country = "Country is required";
+    } else {
+      newErrors.country = "";
+    }
+
+    if (
+      values.country &&
+      bannedCountries.map((c) => c.value).includes(values.country)
+    ) {
+      newErrors.country = "Country is banned";
     } else {
       newErrors.country = "";
     }
@@ -181,7 +189,7 @@ const CreditCardForm = ({ onSubmit }: Props) => {
         onBlur={() => setTouched({ ...touched, country: true })}
         error={errors.country}
       />
-      <CustomButton type="submit">Save Card</CustomButton>
+      <Button type="submit">Save Card</Button>
     </form>
   );
 };

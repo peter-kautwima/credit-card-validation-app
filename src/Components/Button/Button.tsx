@@ -1,14 +1,12 @@
 import React, { HTMLAttributes, ReactHTMLElement } from "react";
-import styles from "./CustomButton.module.scss";
+import styles from "./Button.module.scss";
 
 interface Props extends HTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   type?: "submit" | "button";
-  // event handler
-  // onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const CustomButton = ({ children, type = "button", ...rest }: Props) => {
+const Button = ({ children, type = "button", ...rest }: Props) => {
   return (
     <button className={styles.root} type={type} {...rest}>
       {children}
@@ -16,4 +14,4 @@ const CustomButton = ({ children, type = "button", ...rest }: Props) => {
   );
 };
 
-export default CustomButton;
+export default Button;
