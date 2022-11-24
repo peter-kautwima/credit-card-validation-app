@@ -66,20 +66,29 @@ const CreditCardForm = ({ onSubmit, bannedCountries }: Props) => {
     };
 
     handleRequiredValidation("name", "Name is required");
-    handleRequiredValidation("cardNumber", "Card number is required");
-    handleRequiredValidation("expirationDateMM", "Expiration date is required");
-    handleRequiredValidation("expirationDateYY", "Expiration date is required");
-    handleRequiredValidation("cvv", "CVV is required");
     handleRequiredValidation("country", "Country is required");
-    handleRequiredValidation("name", "Name is required");
 
     const cardNumberErrors = touched?.cardNumber
       ? validateLength(values.cardNumber, 16)
       : "";
 
+    const cvvErrors = touched?.cvv ? validateLength(values.cvv, 3) : "";
+
+    const expirationDateMMErrors = touched?.expirationDateMM
+      ? validationNumberRange(values.expirationDateMM, 1, 12)
+      : "";
+
+    const expirationDateYYErrors = touched?.expirationDateYY
+      ? // @todo don't hard code the year
+        validationNumberRange(values.expirationDateYY, 23, 99)
+      : "";
+
     setErrors({
       ...newErrors,
       cardNumber: cardNumberErrors,
+      cvv: cvvErrors,
+      expirationDateMM: expirationDateMMErrors,
+      expirationDateYY: expirationDateYYErrors,
     });
   };
 

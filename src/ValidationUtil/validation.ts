@@ -24,7 +24,7 @@ export const validationNumbersOnly = (value: string | number) => {
   if (isNaN(Number(value))) {
     return "Must be a number";
   }
-  return true;
+  return "";
 };
 
 export const validationNumberRange = (
@@ -35,26 +35,19 @@ export const validationNumberRange = (
   if (isNaN(Number(value)) || Number(value) < min || Number(value) > max) {
     return `Must be a number between ${min} and ${max}`;
   }
-  return true;
+  return "";
 };
 
 export const validateCVC = (value: string) => {
   if (isNaN(Number(value))) {
     return "Must be a number";
   }
-  return true;
+  return "";
 };
 
 export const validateCardNumber = (value: string) => {
   if (isNaN(Number(value)) || value.length !== 16) {
     return "Must be a number of 16 digits";
   }
-  return true;
-};
-
-export const validateName = (value: string) => {
-  if (value.length < 1) {
-    return "Name should be at least 1 character";
-  }
-  return true;
+  return "";
 };

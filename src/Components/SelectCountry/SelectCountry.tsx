@@ -13,8 +13,8 @@ const SelectCountry = ({ label, error, ...props }: Props) => {
       <label htmlFor="country" className={styles.label}>
         {label}
       </label>
-      <select id="country" name="country" required {...props}>
-        <option>select country</option>
+      <select id="country" name="country" {...props}>
+        <option value="">select country</option>
         {countries.map((country) => (
           <option key={country.value} value={country.value}>
             {country.label}
