@@ -31,15 +31,17 @@ type Touched = {
   [Property in keyof Values]?: boolean;
 };
 
+const initialValues = {
+  name: "",
+  cardNumber: "",
+  expirationDateMM: "",
+  expirationDateYY: "",
+  country: "",
+  cvv: "",
+};
+
 const CreditCardForm = ({ onSubmit, bannedCountries }: Props) => {
-  const [values, setValues] = useState<Values>({
-    name: "",
-    cardNumber: "",
-    expirationDateMM: "",
-    expirationDateYY: "",
-    country: "",
-    cvv: "",
-  });
+  const [values, setValues] = useState<Values>(initialValues);
 
   const [errors, setErrors] = useState<Errors>({});
 
@@ -106,6 +108,9 @@ const CreditCardForm = ({ onSubmit, bannedCountries }: Props) => {
 
     if (isValid()) {
       onSubmit(e);
+      setValues(initialValues);
+      setTouched({});
+      setErrors({});
     }
   };
 
