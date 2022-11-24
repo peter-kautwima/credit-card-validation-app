@@ -1,0 +1,21 @@
+.app {
+  width: 100vw;
+  height: 100vh;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+
+  h2 {
+    margin: 0;
+  }
+
+  > div {
+    display: flex;
+  }
+}
