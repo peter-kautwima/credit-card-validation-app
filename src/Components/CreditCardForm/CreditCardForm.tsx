@@ -3,7 +3,11 @@ import Button from "../Button/Button";
 import SelectCountry from "../SelectCountry/SelectCountry";
 import TextField from "../TextField/TextField";
 import { Country } from "../../types";
-import { validateRequired } from "../../ValidationUtil/validation";
+import {
+  validateLength,
+  validateRequired,
+  validationNumberRange,
+} from "../../ValidationUtil/validation";
 
 type Props = {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -69,7 +73,14 @@ const CreditCardForm = ({ onSubmit, bannedCountries }: Props) => {
     handleRequiredValidation("country", "Country is required");
     handleRequiredValidation("name", "Name is required");
 
-    setErrors(newErrors);
+    const cardNumberErrors = touched?.cardNumber
+      ? validateLength(values.cardNumber, 16)
+      : "";
+
+    setErrors({
+      ...newErrors,
+      cardNumber: cardNumberErrors,
+    });
   };
 
   const isValid = useCallback(() => {
