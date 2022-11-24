@@ -10,6 +10,8 @@
 
 ## Gif recording of all the flows
 
+![2022-11-24_16-48-05 (1)](https://user-images.githubusercontent.com/33910776/203812729-4e02d91b-3e4c-409e-a679-7612bf1e83f9.gif)
+
 ## Why I built it the way I did
 
     I chose to build my app from scratch as a learning opportunity,
@@ -18,6 +20,8 @@
 
 ## To Do & Notable Bugs
 
-    1. Can currently ban the same country multiple times.
-    2. Currently the Credit Card validation is hard coded to the year 2023
-    3. Add Cypress and snapshot tests.
+    1. Change Text Colour form to black.
+    2. Add Banned Countries validation to form.
+    3. Can currently ban the same country multiple times.
+    4. Currently the Credit Card validation is hard coded to the year 2023.
+    5. Add Cypress and snapshot tests.
