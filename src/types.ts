@@ -1,5 +1,11 @@
 export type AppState = {
   cards: Card[];
+  bannedCountries: Country[];
+};
+
+export type Country = {
+  value: string;
+  label: string;
 };
 
 export type Card = {

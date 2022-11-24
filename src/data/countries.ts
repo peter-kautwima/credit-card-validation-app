@@ -1,4 +1,6 @@
-export default [
+import { Country } from "../types";
+
+const countries: Country[] = [
   {
     value: "AF",
     label: "Afghanistan",
@@ -1008,3 +1010,5 @@ export default [
     label: "Zimbabwe",
   },
 ];
+
+export default countries;

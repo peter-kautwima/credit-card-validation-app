@@ -1,5 +1,5 @@
 import React, { SelectHTMLAttributes } from "react";
-import countries from "./countries";
+import countries from "../../data/countries";
 import styles from "./SelectCountry.module.scss";
 
 interface Props extends SelectHTMLAttributes<HTMLSelectElement> {

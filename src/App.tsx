@@ -17,6 +17,7 @@ function App() {
   const existingCards = sessionStorage.getItem("cards");
   const [state, setState] = useState<AppState>({
     cards: existingCards !== null ? JSON.parse(existingCards) : [],
+    bannedCountries: [],
   });
 
   const handleCardSubmit = (e: any) => {
@@ -38,7 +39,7 @@ function App() {
     };
 
     const newCards = [...state.cards, newCard];
-    setState({ cards: newCards });
+    setState({ ...state, cards: newCards });
     // store cards in sessionStorage
     sessionStorage.setItem("cards", JSON.stringify(newCards));
   };
@@ -48,7 +49,12 @@ function App() {
       <section>
         <CreditCardForm onSubmit={handleCardSubmit} state={state} />
         <div className="App">
-          <Modal />
+          <Modal
+            bannedCountries={state.bannedCountries}
+            setBannedCountries={(bannedCountries) =>
+              setState({ ...state, bannedCountries })
+            }
+          />
         </div>
       </section>
       <section>
