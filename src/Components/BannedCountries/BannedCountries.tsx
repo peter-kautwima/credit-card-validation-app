@@ -31,10 +31,7 @@ const BannedCountries = ({ bannedCountries, setBannedCountries }: Props) => {
       <SelectCountry label="Select Country" onChange={handleCountrySelect} />
       <Button
         onClick={() => {
-          console.log("adding banned country", selectedCountry);
-
-          if (selectedCountry) {
-            console.log([...bannedCountries, selectedCountry]);
+          if (selectedCountry && !bannedCountries.includes(selectedCountry)) {
             setBannedCountries([...bannedCountries, selectedCountry]);
           }
         }}
