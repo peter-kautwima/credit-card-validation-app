@@ -90,10 +90,32 @@ const CreditCardForm = ({ onSubmit, bannedCountries, cards }: Props) => {
       if (isCardAlreadyAdded(values.cardNumber)) {
         cardErrors = "Card already added";
       } else {
-        newErrors.cardNumber = cardErrors;
+        cardErrors = cardErrors;
       }
 
       return cardErrors;
+    };
+
+    const getCountryErrors = () => {
+      let countryErrors = errors.country;
+
+      if (!values.country && touched.country) {
+        return "Country is required";
+      }
+
+      const isCountryBanned = (country: string) => {
+        return bannedCountries.some(
+          (bannedCountry) => bannedCountry.value === country
+        );
+      };
+
+      if (isCountryBanned(values.country)) {
+        countryErrors = "Country is banned";
+      } else {
+        countryErrors = "";
+      }
+
+      return countryErrors;
     };
 
     const cvvErrors = touched?.cvv ? validateLength(values.cvv, 3) : "";
@@ -113,6 +135,7 @@ const CreditCardForm = ({ onSubmit, bannedCountries, cards }: Props) => {
       cvv: cvvErrors,
       expirationDateMM: expirationDateMMErrors,
       expirationDateYY: expirationDateYYErrors,
+      country: getCountryErrors(),
     });
   };
 
