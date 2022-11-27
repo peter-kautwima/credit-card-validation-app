@@ -49,6 +49,11 @@ const CreditCardForm = ({ onSubmit, bannedCountries, cards }: Props) => {
 
   const [touched, setTouched] = useState<Touched>({
     name: false,
+    cardNumber: false,
+    expirationDateMM: false,
+    expirationDateYY: false,
+    country: false,
+    cvv: false,
   });
 
   const setAllTouched = () => {
@@ -112,6 +117,10 @@ const CreditCardForm = ({ onSubmit, bannedCountries, cards }: Props) => {
   };
 
   const isValid = useCallback(() => {
+    if (Object.values(touched).filter((t) => t === false).length > 0) {
+      return false;
+    }
+
     return Object.values(errors).filter((error) => error !== "").length === 0;
   }, [errors]);
 
