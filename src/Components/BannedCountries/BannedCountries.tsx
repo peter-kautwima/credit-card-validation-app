@@ -3,6 +3,7 @@ import { Country } from '../../types';
 import { getSelectedCountry } from '../../utils';
 import Button from '../Button/Button';
 import SelectCountry from '../SelectCountry/SelectCountry';
+import styles from './BannedCountries.module.scss';
 
 type Props = {
   bannedCountries: Country[];
@@ -46,14 +47,18 @@ const BannedCountries = ({ bannedCountries, setBannedCountries }: Props) => {
       </Button>
 
       <h4>Banned Countries</h4>
-      <ul>
-        {bannedCountries.map((country) => (
-          <li key={country.value}>
-            {country.label}
-            <button onClick={() => handleRemoveCountry(country)}>X</button>
-          </li>
-        ))}
-      </ul>
+      {bannedCountries.length > 0 ? (
+        <ul className={styles.list}>
+          {bannedCountries.map((country) => (
+            <li key={country.value}>
+              {country.label}
+              <button onClick={() => handleRemoveCountry(country)}>X</button>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No banned countries</p>
+      )}
     </form>
   );
 };
