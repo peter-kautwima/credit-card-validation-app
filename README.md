@@ -15,13 +15,13 @@
 
 ## Gif of App
 
-![Credit Card Verification](https://user-images.githubusercontent.com/33910776/204141009-a95d81bd-5f72-4832-ab57-d762a1f34b94.gif)
+![Credit Card Verification](https://user-images.githubusercontent.com/33910776/204276534-852fe5b0-fad7-4003-a3f1-0d3b793d2d2e.gif)
 
 ## How to run the app
 
     npm run dev
 
-## How to run tests
+## How to run Vitest
 
     npm run test
 
@@ -34,3 +34,8 @@
 
 For my app I used HeadlessUI for my modal, which I styled and added functionality to. I chose to build everything else from scratch as a learning opportunity.
 The validation on the forms was rather tricky and I now have a new found appreciation for Formik!
+
+## Gif of Cypress Tests
+
+![Cypress Tests](https://user-images.githubusercontent.com/33910776/204277123-c126fa04-fd65-4fb8-9c7c-6cff09489efa.gif)
+
