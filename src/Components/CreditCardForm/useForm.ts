@@ -114,11 +114,13 @@ const useForm = ({ cards, bannedCountries, onSubmit }: Props) => {
       ? validationNumberRange(values.expirationDateMM, 1, 12)
       : '';
 
-  const getExpirationDateYYErrors = () =>
-    touched?.expirationDateYY
-      ? // @todo don't hard code the year
-        validationNumberRange(values.expirationDateYY, 23, 99)
+  const getExpirationDateYYErrors = () => {
+    const currentYear =
+      parseInt(new Date().getFullYear().toString().slice(2, 4)) + 1;
+    return touched?.expirationDateYY
+      ? validationNumberRange(values.expirationDateYY, currentYear, 99)
       : '';
+  };
 
   const handleValidaton = () => {
     const newErrors = { ...errors };
