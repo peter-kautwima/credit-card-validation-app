@@ -1,6 +1,7 @@
 describe('Succesful user flows', () => {
   beforeEach(() => {
     cy.visit('/');
+    sessionStorage.clear();
   });
 
   it('adds card to cards table', () => {
@@ -12,9 +13,6 @@ describe('Succesful user flows', () => {
       country: 'United States',
       cvv: '123',
     };
-
-    sessionStorage.setItem('newCard', JSON.stringify(cardData));
-    expect(sessionStorage.getItem('newCard')).to.eq(JSON.stringify(cardData));
 
     cy.findByText('Add New Card').click();
     cy.get('#name').type(cardData.name);
@@ -32,6 +30,6 @@ describe('Succesful user flows', () => {
       }
     });
 
-    cy.findByText('Test Card 1').should('exist');
+    cy.get('#saved-cards').findByText('Test Card 1').should('exist');
   });
 });

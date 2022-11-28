@@ -14,7 +14,7 @@ export type Column = {
 
 const CardsTable = ({ data, columns }: TableProps) => {
   return (
-    <div className={styles['my-cards-table']}>
+    <div id="saved-cards" className={styles['my-cards-table']}>
       <div className={styles.header}>
         {columns.map((column) => (
           <div key={column.accessor} className={styles.headerCell}>
