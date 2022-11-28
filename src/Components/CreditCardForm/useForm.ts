@@ -1,8 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import {
-  validateLength,
-  validationNumberRange,
-} from '../../ValidationUtil/validation';
+import { validateLength, validationNumberRange } from '../../utils/validation';
 import { Props } from './CreditCardForm';
 
 type Values = {
