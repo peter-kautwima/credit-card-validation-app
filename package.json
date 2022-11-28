@@ -10,7 +10,8 @@
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "lint": "eslint . --ext .ts,.tsx"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.4",
