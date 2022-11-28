@@ -20,7 +20,9 @@ describe('validates new card inputs', () => {
       { label: 'Åland Islands', value: 'AX' },
     ];
     sessionStorage.setItem('bannedCountries', JSON.stringify(bannedCountries));
-    expect(sessionStorage.getItem('bannedCountries')).to.eq(JSON.stringify(bannedCountries));
+    expect(sessionStorage.getItem('bannedCountries')).to.eq(
+      JSON.stringify(bannedCountries),
+    );
 
     cy.findByText('Add New Card').click();
     cy.get('#country').select('Afghanistan');
