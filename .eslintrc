@@ -12,7 +12,8 @@
     "sourceType": "module"
   },
   "rules": {
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "no-self-assign": "off"
   },
   "plugins": ["@typescript-eslint", "react", "react-hooks"],
   "settings": {

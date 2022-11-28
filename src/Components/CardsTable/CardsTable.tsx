@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './CardsTable.module.scss';
 import { Card } from '../../types';
 type TableProps = {

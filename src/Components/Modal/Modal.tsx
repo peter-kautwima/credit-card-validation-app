@@ -1,6 +1,6 @@
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
-import styles from "./Modal.module.scss";
+import { Dialog, Transition } from '@headlessui/react';
+import { Fragment } from 'react';
+import styles from './Modal.module.scss';
 
 type Props = {
   title: string;
