@@ -3,6 +3,10 @@ describe('validate banned countries', () => {
     cy.visit('/');
   });
 
+  afterEach(() => {
+    sessionStorage.clear();
+  });
+
   it('validates banned countries', () => {
     const bannedCountries = [
       { label: 'Afghanistan', value: 'AF' },
@@ -12,6 +16,8 @@ describe('validate banned countries', () => {
     expect(sessionStorage.getItem('bannedCountries')).to.eq(JSON.stringify(bannedCountries));
 
     cy.findByText('Banned Countries').click();
+
+    cy.get('ul').findByText('Afghanistan').should('exist');
 
     cy.get('#country').select('Afghanistan');
     cy.findByText('Ban Country').click();
