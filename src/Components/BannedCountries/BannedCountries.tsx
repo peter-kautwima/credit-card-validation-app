@@ -1,8 +1,8 @@
-import React, { ChangeEvent, useState } from "react";
-import { Country } from "../../types";
-import { getSelectedCountry } from "../../utils";
-import Button from "../Button/Button";
-import SelectCountry from "../SelectCountry/SelectCountry";
+import React, { ChangeEvent, useState } from 'react';
+import { Country } from '../../types';
+import { getSelectedCountry } from '../../utils';
+import Button from '../Button/Button';
+import SelectCountry from '../SelectCountry/SelectCountry';
 
 type Props = {
   bannedCountries: Country[];
@@ -20,9 +20,7 @@ const BannedCountries = ({ bannedCountries, setBannedCountries }: Props) => {
   };
 
   const handleRemoveCountry = (country: Country) => {
-    const newBannedCountries = bannedCountries.filter(
-      (c) => c.value !== country.value
-    );
+    const newBannedCountries = bannedCountries.filter((c) => c.value !== country.value);
     setBannedCountries(newBannedCountries);
   };
 
