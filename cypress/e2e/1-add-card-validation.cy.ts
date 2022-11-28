@@ -14,7 +14,7 @@ describe('validates new card inputs', () => {
     cy.findByText('Country is required').should('exist');
   });
 
-  it('validations banned countries', () => {
+  it('validates banned countries', () => {
     const bannedCountries = [
       { label: 'Afghanistan', value: 'AF' },
       { label: 'Åland Islands', value: 'AX' },
@@ -27,5 +27,18 @@ describe('validates new card inputs', () => {
     cy.findByText('Add New Card').click();
     cy.get('#country').select('Afghanistan');
     cy.findByText('Country is banned').should('exist');
+  });
+
+  // validation error when trying to add the same card
+  it('validates error when trying to add the same card', () => {
+    const cardData = {
+      name: 'Test Card 1',
+      cardNumber: '0000000000000000',
+    };
+    cy.findByText('Add New Card').click();
+
+    cy.get('#name').type(cardData.name);
+    cy.get('#cardNumber').type(cardData.cardNumber);
+    cy.findByText('Card already added').click();
   });
 });
