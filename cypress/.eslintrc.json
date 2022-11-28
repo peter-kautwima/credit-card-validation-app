@@ -1,0 +1,10 @@
+{
+  "plugins": ["cypress"],
+  "extends": ["plugin:cypress/recommended"],
+  "parserOptions": {
+    "project": ["./tsconfig.json"]
+  },
+  "env": {
+    "cypress/globals": true
+  }
+}

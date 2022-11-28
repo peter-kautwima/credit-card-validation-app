@@ -1,14 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
-import Button from "../Button/Button";
-import SelectCountry from "../SelectCountry/SelectCountry";
-import TextField from "../TextField/TextField";
-import { Card, Country } from "../../types";
-import {
-  validateLength,
-  validateRequired,
-  validationNumberRange,
-} from "../../ValidationUtil/validation";
-import styles from "./CreditCardForm.module.scss";
+import { useCallback, useEffect, useState } from 'react';
+import Button from '../Button/Button';
+import SelectCountry from '../SelectCountry/SelectCountry';
+import TextField from '../TextField/TextField';
+import { Card, Country } from '../../types';
+import { validateLength, validateRequired, validationNumberRange } from '../../ValidationUtil/validation';
+import styles from './CreditCardForm.module.scss';
 
 type Props = {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -34,12 +30,12 @@ type Touched = {
 };
 
 const initialValues = {
-  name: "",
-  cardNumber: "",
-  expirationDateMM: "",
-  expirationDateYY: "",
-  country: "",
-  cvv: "",
+  name: '',
+  cardNumber: '',
+  expirationDateMM: '',
+  expirationDateYY: '',
+  country: '',
+  cvv: '',
 };
 
 const CreditCardForm = ({ onSubmit, bannedCountries, cards }: Props) => {
@@ -74,21 +70,19 @@ const CreditCardForm = ({ onSubmit, bannedCountries, cards }: Props) => {
       validateRequired(name, values, newErrors, touched, error);
     };
 
-    handleRequiredValidation("name", "Name is required");
-    handleRequiredValidation("country", "Country is required");
+    handleRequiredValidation('name', 'Name is required');
+    handleRequiredValidation('country', 'Country is required');
 
     const getCardNumberErrors = () => {
-      let cardErrors = "";
+      let cardErrors = '';
       const isCardAlreadyAdded = (cardNumber: string) => {
         return cards.some((card) => card.cardNumber === cardNumber);
       };
 
-      cardErrors = touched?.cardNumber
-        ? validateLength(values.cardNumber, 16)
-        : "";
+      cardErrors = touched?.cardNumber ? validateLength(values.cardNumber, 16) : '';
 
       if (isCardAlreadyAdded(values.cardNumber)) {
-        cardErrors = "Card already added";
+        cardErrors = 'Card already added';
       } else {
         cardErrors = cardErrors;
       }
@@ -100,34 +94,32 @@ const CreditCardForm = ({ onSubmit, bannedCountries, cards }: Props) => {
       let countryErrors = errors.country;
 
       if (!values.country && touched.country) {
-        return "Country is required";
+        return 'Country is required';
       }
 
       const isCountryBanned = (country: string) => {
-        return bannedCountries.some(
-          (bannedCountry) => bannedCountry.value === country
-        );
+        return bannedCountries.some((bannedCountry) => bannedCountry.value === country);
       };
 
       if (isCountryBanned(values.country)) {
-        countryErrors = "Country is banned";
+        countryErrors = 'Country is banned';
       } else {
-        countryErrors = "";
+        countryErrors = '';
       }
 
       return countryErrors;
     };
 
-    const cvvErrors = touched?.cvv ? validateLength(values.cvv, 3) : "";
+    const cvvErrors = touched?.cvv ? validateLength(values.cvv, 3) : '';
 
     const expirationDateMMErrors = touched?.expirationDateMM
       ? validationNumberRange(values.expirationDateMM, 1, 12)
-      : "";
+      : '';
 
     const expirationDateYYErrors = touched?.expirationDateYY
       ? // @todo don't hard code the year
         validationNumberRange(values.expirationDateYY, 23, 99)
-      : "";
+      : '';
 
     setErrors({
       ...newErrors,
@@ -144,7 +136,7 @@ const CreditCardForm = ({ onSubmit, bannedCountries, cards }: Props) => {
       return false;
     }
 
-    return Object.values(errors).filter((error) => error !== "").length === 0;
+    return Object.values(errors).filter((error) => error !== '').length === 0;
   }, [errors]);
 
   useEffect(() => {
@@ -168,8 +160,8 @@ const CreditCardForm = ({ onSubmit, bannedCountries, cards }: Props) => {
     handleValidaton();
   }, [values, touched]);
   return (
-    <form onSubmit={handleSubmit} className={styles["credit-card-form"]}>
-      <div className={styles["two-col"]}>
+    <form onSubmit={handleSubmit} className={styles['credit-card-form']}>
+      <div className={styles['two-col']}>
         <TextField
           name="name"
           label="Name"
@@ -191,15 +183,13 @@ const CreditCardForm = ({ onSubmit, bannedCountries, cards }: Props) => {
           type="number"
         />
       </div>
-      <div className={styles["three-col"]}>
+      <div className={styles['three-col']}>
         <TextField
           name="expirationDateMM"
           label="Expiration Date: MM"
           value={values.expirationDateMM}
           placeholder="MM"
-          onChange={(e) =>
-            setValues({ ...values, expirationDateMM: e.target.value })
-          }
+          onChange={(e) => setValues({ ...values, expirationDateMM: e.target.value })}
           onBlur={() => setTouched({ ...touched, expirationDateMM: true })}
           error={errors.expirationDateMM}
           type="number"
@@ -209,9 +199,7 @@ const CreditCardForm = ({ onSubmit, bannedCountries, cards }: Props) => {
           label="Expiration Date: YY"
           value={values.expirationDateYY}
           placeholder="YY"
-          onChange={(e) =>
-            setValues({ ...values, expirationDateYY: e.target.value })
-          }
+          onChange={(e) => setValues({ ...values, expirationDateYY: e.target.value })}
           onBlur={() => setTouched({ ...touched, expirationDateYY: true })}
           error={errors.expirationDateYY}
           type="number"

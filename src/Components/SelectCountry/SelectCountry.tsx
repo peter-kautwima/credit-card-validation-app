@@ -1,6 +1,6 @@
-import React, { SelectHTMLAttributes } from "react";
-import countries from "../../data/countries";
-import styles from "./SelectCountry.module.scss";
+import React, { SelectHTMLAttributes } from 'react';
+import countries from '../../data/countries';
+import styles from './SelectCountry.module.scss';
 
 interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
   label: string;

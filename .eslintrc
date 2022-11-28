@@ -1,0 +1,27 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "plugin:vitest-globals/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": ["./tsconfig.json", "./cypress/tsconfig.json"],
+    "sourceType": "module"
+  },
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "no-self-assign": "off"
+  },
+  "plugins": ["@typescript-eslint", "react", "react-hooks"],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "env": {
+    "vitest-globals/env": true
+  }
+}
