@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import CardsTable, { Column } from './components/CardsTable/CardsTable';
 import Modal from './components/Modal/Modal';
 import { AppState, Card, Country } from './types';
