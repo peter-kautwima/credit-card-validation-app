@@ -34,17 +34,4 @@ describe('Succesful user flows', () => {
 
     cy.findByText('Test Card 1').should('exist');
   });
-
-  // validation error when trying to add the same card
-  it('validation error when trying to add the same card', () => {
-    const cardData = {
-      name: 'Test Card 1',
-      cardNumber: '0000000000000000',
-    };
-    cy.findByText('Add New Card').click();
-
-    cy.get('#name').type(cardData.name);
-    cy.get('#cardNumber').type(cardData.cardNumber);
-    cy.findByText('Card already added').click();
-  });
 });

@@ -30,14 +30,23 @@ function App() {
 
   const [state, setState] = useState<AppState>({
     cards: existingCards !== null ? JSON.parse(existingCards) : [],
-    bannedCountries: bannedCountries !== null ? JSON.parse(bannedCountries) : [],
+    bannedCountries:
+      bannedCountries !== null ? JSON.parse(bannedCountries) : [],
   });
 
   const [isAddNewCardModalOpen, setIsAddNewCardModalOpen] = useState(false);
-  const [isBannedCountriesModalOpen, setIsBannedCountriesModalOpen] = useState(false);
+  const [isBannedCountriesModalOpen, setIsBannedCountriesModalOpen] =
+    useState(false);
 
   const handleCardSubmit = (e: any) => {
-    const { name, cardNumber, expirationDateMM, expirationDateYY, country, cvv } = e.target;
+    const {
+      name,
+      cardNumber,
+      expirationDateMM,
+      expirationDateYY,
+      country,
+      cvv,
+    } = e.target;
 
     const newCard = {
       name: name?.value,
@@ -63,9 +72,13 @@ function App() {
       <section className={styles.header}>
         <h2>My Cards</h2>
         <div>
-          <Button onClick={() => setIsAddNewCardModalOpen(true)}>Add New Card</Button>
+          <Button onClick={() => setIsAddNewCardModalOpen(true)}>
+            Add New Card
+          </Button>
 
-          <Button onClick={() => setIsBannedCountriesModalOpen(true)}>Banned Countries</Button>
+          <Button onClick={() => setIsBannedCountriesModalOpen(true)}>
+            Banned Countries
+          </Button>
         </div>
       </section>
 
@@ -73,12 +86,23 @@ function App() {
         {state.cards.length === 0 ? (
           <p>No cards added yet.</p>
         ) : (
-          <CardsTable data={state.cards.map((card) => transformCardRow(card))} columns={columns} />
+          <CardsTable
+            data={state.cards.map((card) => transformCardRow(card))}
+            columns={columns}
+          />
         )}
       </section>
 
-      <Modal title="Add Credit Cards" isOpen={isAddNewCardModalOpen} onClose={() => setIsAddNewCardModalOpen(false)}>
-        <CreditCardForm onSubmit={handleCardSubmit} cards={state.cards} bannedCountries={state.bannedCountries} />
+      <Modal
+        title="Add Credit Cards"
+        isOpen={isAddNewCardModalOpen}
+        onClose={() => setIsAddNewCardModalOpen(false)}
+      >
+        <CreditCardForm
+          onSubmit={handleCardSubmit}
+          cards={state.cards}
+          bannedCountries={state.bannedCountries}
+        />
       </Modal>
 
       <Modal

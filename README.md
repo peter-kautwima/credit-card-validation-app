@@ -32,9 +32,5 @@
 
 ## About Build
 
-    For my app I used HeadlessUI for my modal, which I styled and added functionality to. I chose to build everything else from scratch as a learning opportunity.
-    The validation on the forms was rather tricky and I now have a new found appreciation for Formik!
-
-## Notable To Do's
-
-    1. Credit Card validation is hard coded to the year 2023.
+For my app I used HeadlessUI for my modal, which I styled and added functionality to. I chose to build everything else from scratch as a learning opportunity.
+The validation on the forms was rather tricky and I now have a new found appreciation for Formik!

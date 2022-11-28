@@ -1,0 +1,17 @@
+.list {
+  list-style: none;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+
+  li {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: none;
+    padding: 0.2rem 0.5rem;
+    display: flex;
+    justify-content: space-between;
+
+    &:first-child {
+      border: none;
+    }
+  }
+}

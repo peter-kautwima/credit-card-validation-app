@@ -7,7 +7,10 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const TextField = ({ name, label, error, ...props }: Props) => {
-  const classes = [styles['text-field'], error ? styles['text-field--error'] : ''].join(' ');
+  const classes = [
+    styles['text-field'],
+    error ? styles['text-field--error'] : '',
+  ].join(' ');
   return (
     <div className={classes}>
       <label className={styles.label} htmlFor={name}>

@@ -3,6 +3,7 @@ import { Country } from '../../types';
 import { getSelectedCountry } from '../../utils';
 import Button from '../Button/Button';
 import SelectCountry from '../SelectCountry/SelectCountry';
+import styles from './BannedCountries.module.scss';
 
 type Props = {
   bannedCountries: Country[];
@@ -20,7 +21,9 @@ const BannedCountries = ({ bannedCountries, setBannedCountries }: Props) => {
   };
 
   const handleRemoveCountry = (country: Country) => {
-    const newBannedCountries = bannedCountries.filter((c) => c.value !== country.value);
+    const newBannedCountries = bannedCountries.filter(
+      (c) => c.value !== country.value,
+    );
     setBannedCountries(newBannedCountries);
   };
 
@@ -29,7 +32,13 @@ const BannedCountries = ({ bannedCountries, setBannedCountries }: Props) => {
       <SelectCountry label="Select Country" onChange={handleCountrySelect} />
       <Button
         onClick={() => {
-          if (selectedCountry && !bannedCountries.includes(selectedCountry)) {
+          console.log({ bannedCountries });
+          if (
+            selectedCountry &&
+            !bannedCountries
+              .map(({ value }) => value)
+              .includes(selectedCountry.value)
+          ) {
             setBannedCountries([...bannedCountries, selectedCountry]);
           }
         }}
@@ -38,14 +47,18 @@ const BannedCountries = ({ bannedCountries, setBannedCountries }: Props) => {
       </Button>
 
       <h4>Banned Countries</h4>
-      <ul>
-        {bannedCountries.map((country) => (
-          <li key={country.value}>
-            {country.label}
-            <button onClick={() => handleRemoveCountry(country)}>X</button>
-          </li>
-        ))}
-      </ul>
+      {bannedCountries.length > 0 ? (
+        <ul className={styles.list}>
+          {bannedCountries.map((country) => (
+            <li key={country.value}>
+              {country.label}
+              <button onClick={() => handleRemoveCountry(country)}>X</button>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No banned countries</p>
+      )}
     </form>
   );
 };
