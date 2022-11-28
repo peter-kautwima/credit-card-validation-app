@@ -62,6 +62,7 @@ const useForm = ({ cards, bannedCountries, onSubmit }: Props) => {
     if (!values.name && touched.name) {
       return 'Name is required';
     }
+    return '';
   };
 
   const getCardNumberErrors = () => {
