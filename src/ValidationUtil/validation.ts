@@ -5,7 +5,13 @@ export const validateLength = (value: string, length: number) => {
   return '';
 };
 
-export const validateRequired = (name: string, values: any, errors: any, touched: any, error: string) => {
+export const validateRequired = (
+  name: string,
+  values: any,
+  errors: any,
+  touched: any,
+  error: string,
+) => {
   if (!values[name] && touched[name]) {
     errors[name] = error;
   } else {
@@ -14,14 +20,11 @@ export const validateRequired = (name: string, values: any, errors: any, touched
   return errors;
 };
 
-export const validationNumbersOnly = (value: string | number) => {
-  if (isNaN(Number(value))) {
-    return 'Must be a number';
-  }
-  return '';
-};
-
-export const validationNumberRange = (value: string | number, min: number | string, max: number | string) => {
+export const validationNumberRange = (
+  value: string | number,
+  min: number | string,
+  max: number | string,
+) => {
   if (isNaN(Number(value)) || Number(value) < min || Number(value) > max) {
     return `Must be a number between ${min} and ${max}`;
   }

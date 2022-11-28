@@ -3,7 +3,11 @@ import Button from '../Button/Button';
 import SelectCountry from '../SelectCountry/SelectCountry';
 import TextField from '../TextField/TextField';
 import { Card, Country } from '../../types';
-import { validateLength, validateRequired, validationNumberRange } from '../../ValidationUtil/validation';
+import {
+  validateLength,
+  validateRequired,
+  validationNumberRange,
+} from '../../ValidationUtil/validation';
 import styles from './CreditCardForm.module.scss';
 
 type Props = {
@@ -79,7 +83,9 @@ const CreditCardForm = ({ onSubmit, bannedCountries, cards }: Props) => {
         return cards.some((card) => card.cardNumber === cardNumber);
       };
 
-      cardErrors = touched?.cardNumber ? validateLength(values.cardNumber, 16) : '';
+      cardErrors = touched?.cardNumber
+        ? validateLength(values.cardNumber, 16)
+        : '';
 
       if (isCardAlreadyAdded(values.cardNumber)) {
         cardErrors = 'Card already added';
@@ -98,7 +104,9 @@ const CreditCardForm = ({ onSubmit, bannedCountries, cards }: Props) => {
       }
 
       const isCountryBanned = (country: string) => {
-        return bannedCountries.some((bannedCountry) => bannedCountry.value === country);
+        return bannedCountries.some(
+          (bannedCountry) => bannedCountry.value === country,
+        );
       };
 
       if (isCountryBanned(values.country)) {
@@ -189,7 +197,9 @@ const CreditCardForm = ({ onSubmit, bannedCountries, cards }: Props) => {
           label="Expiration Date: MM"
           value={values.expirationDateMM}
           placeholder="MM"
-          onChange={(e) => setValues({ ...values, expirationDateMM: e.target.value })}
+          onChange={(e) =>
+            setValues({ ...values, expirationDateMM: e.target.value })
+          }
           onBlur={() => setTouched({ ...touched, expirationDateMM: true })}
           error={errors.expirationDateMM}
           type="number"
@@ -199,7 +209,9 @@ const CreditCardForm = ({ onSubmit, bannedCountries, cards }: Props) => {
           label="Expiration Date: YY"
           value={values.expirationDateYY}
           placeholder="YY"
-          onChange={(e) => setValues({ ...values, expirationDateYY: e.target.value })}
+          onChange={(e) =>
+            setValues({ ...values, expirationDateYY: e.target.value })
+          }
           onBlur={() => setTouched({ ...touched, expirationDateYY: true })}
           error={errors.expirationDateYY}
           type="number"
