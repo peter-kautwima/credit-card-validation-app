@@ -14,23 +14,25 @@ export type Column = {
 
 const CardsTable = ({ data, columns }: TableProps) => {
   return (
-    <div id="saved-cards" className={styles['my-cards-table']}>
-      <div className={styles.header}>
+    <table id="saved-cards" className={styles['my-cards-table']}>
+      <thead className={styles.header}>
         {columns.map((column) => (
-          <div key={column.accessor} className={styles.headerCell}>
+          <td key={column.accessor} className={styles.headerCell}>
             {column.label}
-          </div>
+          </td>
         ))}
-      </div>
-      {data.map((row) => (
-        <div key={row.id} className={styles.row}>
-          {Object.keys(row).map((key) => {
-            const value = row[key as keyof RowData];
-            return <div key={key}>{value}</div>;
-          })}
-        </div>
-      ))}
-    </div>
+      </thead>
+      <tbody>
+        {data.map((row) => (
+          <tr key={row.id} className={styles.row}>
+            {Object.keys(row).map((key) => {
+              const value = row[key as keyof RowData];
+              return <td key={key}>{value}</td>;
+            })}
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 };
 
