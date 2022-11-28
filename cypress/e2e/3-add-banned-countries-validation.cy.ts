@@ -13,7 +13,9 @@ describe('validate banned countries', () => {
       { label: 'Åland Islands', value: 'AX' },
     ];
     sessionStorage.setItem('bannedCountries', JSON.stringify(bannedCountries));
-    expect(sessionStorage.getItem('bannedCountries')).to.eq(JSON.stringify(bannedCountries));
+    expect(sessionStorage.getItem('bannedCountries')).to.eq(
+      JSON.stringify(bannedCountries),
+    );
 
     cy.findByText('Banned Countries').click();
 
@@ -21,5 +23,6 @@ describe('validate banned countries', () => {
 
     cy.get('#country').select('Afghanistan');
     cy.findByText('Ban Country').click();
+    cy.get('ul').findAllByText('Afghanistan').should('have.length', 1);
   });
 });
