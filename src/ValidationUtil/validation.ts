@@ -5,21 +5,6 @@ export const validateLength = (value: string, length: number) => {
   return '';
 };
 
-export const validateRequired = (
-  name: string,
-  values: any,
-  errors: any,
-  touched: any,
-  error: string,
-) => {
-  if (!values[name] && touched[name]) {
-    errors[name] = error;
-  } else {
-    errors[name] = '';
-  }
-  return errors;
-};
-
 export const validationNumberRange = (
   value: string | number,
   min: number | string,

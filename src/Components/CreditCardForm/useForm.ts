@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import {
   validateLength,
-  validateRequired,
   validationNumberRange,
 } from '../../ValidationUtil/validation';
 import { Props } from './CreditCardForm';
@@ -46,6 +45,11 @@ const useForm = ({ cards, bannedCountries, onSubmit }: Props) => {
     cvv: false,
   });
 
+  // handle validation on first mount
+  useEffect(() => {
+    handleValidaton();
+  }, []);
+
   const setAllTouched = () => {
     setTouched({
       name: true,
@@ -57,74 +61,77 @@ const useForm = ({ cards, bannedCountries, onSubmit }: Props) => {
     });
   };
 
-  const handleValidaton = () => {
-    const newErrors = { ...errors };
+  const getNameErrors = () => {
+    if (!values.name && touched.name) {
+      return 'Name is required';
+    }
+  };
 
-    const handleRequiredValidation = (name: string, error: string) => {
-      validateRequired(name, values, newErrors, touched, error);
+  const getCardNumberErrors = () => {
+    let cardErrors = '';
+    const isCardAlreadyAdded = (cardNumber: string) => {
+      return cards.some((card) => card.cardNumber === cardNumber);
     };
 
-    handleRequiredValidation('name', 'Name is required');
-    handleRequiredValidation('country', 'Country is required');
+    cardErrors = touched?.cardNumber
+      ? validateLength(values.cardNumber, 16)
+      : '';
 
-    const getCardNumberErrors = () => {
-      let cardErrors = '';
-      const isCardAlreadyAdded = (cardNumber: string) => {
-        return cards.some((card) => card.cardNumber === cardNumber);
-      };
+    if (isCardAlreadyAdded(values.cardNumber)) {
+      cardErrors = 'Card already added';
+    } else {
+      cardErrors = cardErrors;
+    }
 
-      cardErrors = touched?.cardNumber
-        ? validateLength(values.cardNumber, 16)
-        : '';
+    return cardErrors;
+  };
 
-      if (isCardAlreadyAdded(values.cardNumber)) {
-        cardErrors = 'Card already added';
-      } else {
-        cardErrors = cardErrors;
-      }
+  const getCountryErrors = () => {
+    let countryErrors = errors.country;
 
-      return cardErrors;
+    if (!values.country && touched.country) {
+      return 'Country is required';
+    }
+
+    const isCountryBanned = (country: string) => {
+      return bannedCountries.some(
+        (bannedCountry) => bannedCountry.value === country,
+      );
     };
 
-    const getCountryErrors = () => {
-      let countryErrors = errors.country;
+    if (isCountryBanned(values.country)) {
+      countryErrors = 'Country is banned';
+    } else {
+      countryErrors = '';
+    }
 
-      if (!values.country && touched.country) {
-        return 'Country is required';
-      }
+    return countryErrors;
+  };
 
-      const isCountryBanned = (country: string) => {
-        return bannedCountries.some(
-          (bannedCountry) => bannedCountry.value === country,
-        );
-      };
+  const getCvvErrors = () => {
+    return touched?.cvv ? validateLength(values.cvv, 3) : '';
+  };
 
-      if (isCountryBanned(values.country)) {
-        countryErrors = 'Country is banned';
-      } else {
-        countryErrors = '';
-      }
-
-      return countryErrors;
-    };
-
-    const cvvErrors = touched?.cvv ? validateLength(values.cvv, 3) : '';
-
-    const expirationDateMMErrors = touched?.expirationDateMM
+  const getExpirationDateMMErrors = () =>
+    touched?.expirationDateMM
       ? validationNumberRange(values.expirationDateMM, 1, 12)
       : '';
 
-    const expirationDateYYErrors = touched?.expirationDateYY
+  const getExpirationDateYYErrors = () =>
+    touched?.expirationDateYY
       ? // @todo don't hard code the year
         validationNumberRange(values.expirationDateYY, 23, 99)
       : '';
 
+  const handleValidaton = () => {
+    const newErrors = { ...errors };
     setErrors({
       ...newErrors,
+      name: getNameErrors(),
       cardNumber: getCardNumberErrors(),
-      cvv: cvvErrors,
-      expirationDateMM: expirationDateMMErrors,
-      expirationDateYY: expirationDateYYErrors,
+      cvv: getCvvErrors(),
+      expirationDateMM: getExpirationDateMMErrors(),
+      expirationDateYY: getExpirationDateYYErrors(),
       country: getCountryErrors(),
     });
   };
@@ -136,10 +143,6 @@ const useForm = ({ cards, bannedCountries, onSubmit }: Props) => {
 
     return Object.values(errors).filter((error) => error !== '').length === 0;
   }, [errors]);
-
-  useEffect(() => {
-    handleValidaton();
-  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
