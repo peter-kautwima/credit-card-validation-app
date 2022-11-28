@@ -1,24 +1,26 @@
 {
-  "extends": ["plugin:react/recommended", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "plugin:vitest-globals/recommended"
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json",
-    "legacyDecorators": true,
-    "warnOnUnsupportedTypeScriptVersion": false
+    "sourceType": "module"
   },
   "rules": {
-    "multiline-ternary": "off",
-    "react/prop-types": "off",
-    "@typescript-eslint/strict-boolean-expressions": "off", // temporarily disable
-    "@typescript-eslint/explicit-function-return-type": "off", // temporarily disable
-    "@typescript-eslint/restrict-template-expressions": "off", // temporarily disable
-    "@typescript-eslint/restrict-plus-operands": "off", // temporarily disable
-    "react/no-unescaped-entities": "off" // temporarily disable
+    "react/react-in-jsx-scope": "off"
   },
   "plugins": ["@typescript-eslint", "react", "react-hooks"],
   "settings": {
     "react": {
       "version": "detect"
     }
+  },
+  "env": {
+    "vitest-globals/env": true
   }
 }

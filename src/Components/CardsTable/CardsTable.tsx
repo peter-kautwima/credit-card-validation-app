@@ -1,6 +1,6 @@
-import React from "react";
-import styles from "./CardsTable.module.scss";
-import { Card } from "../../types";
+import React from 'react';
+import styles from './CardsTable.module.scss';
+import { Card } from '../../types';
 type TableProps = {
   data: RowData[];
   columns: Column[];
@@ -15,7 +15,7 @@ export type Column = {
 
 const CardsTable = ({ data, columns }: TableProps) => {
   return (
-    <div className={styles["my-cards-table"]}>
+    <div className={styles['my-cards-table']}>
       <div className={styles.header}>
         {columns.map((column) => (
           <div key={column.accessor} className={styles.headerCell}>
@@ -27,7 +27,7 @@ const CardsTable = ({ data, columns }: TableProps) => {
         <div key={row.id} className={styles.row}>
           {Object.keys(row).map((key) => {
             const value = row[key as keyof RowData];
-            return <div>{value}</div>;
+            return <div key={key}>{value}</div>;
           })}
         </div>
       ))}
