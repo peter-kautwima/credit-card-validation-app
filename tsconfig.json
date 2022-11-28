@@ -18,5 +18,6 @@
     "types": ["vitest/globals"]
   },
   "include": ["src"],
+  "exclude": ["cypress"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
